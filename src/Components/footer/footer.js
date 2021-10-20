@@ -1,6 +1,6 @@
 import React from 'react'
 import "./footer.css"
-import Logo from "../../Assests/logo.svg"
+import Logo from "../../Assests/logo2.png"
 
 function footer() {
     return (
@@ -10,8 +10,22 @@ function footer() {
 
 {/* <!--  for company name and description --> */}
     <div className="footer-items">
-      <h1>Company Name</h1>
-      <p>Description of any product or motto of the company.</p>
+      <img className= "logo" src={Logo} alt = "logo" />
+      <p>Master Mind (MMD) token 
+is a decentralized digital 
+currency that is design 
+with a community-first 
+approach to providing 
+alternative solutions to the 
+finance challenges faced 
+today. The currency was 
+built with the aim to 
+utilize the collective 
+strength of her community 
+and blockchain technology 
+to improve the bargaining 
+strength of every 
+individual.</p>
     </div>
 
 {/* <!--  for quick links  --> */}

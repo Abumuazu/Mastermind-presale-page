@@ -15,7 +15,7 @@ function Timer() {
        <h4 className= "header-text">  Why You Should  Choose MMD Token</h4>
        <div className="reason-box1">
 
-   <h4>All proceeds from presale will go into providing liquidity that will be will be permanently changed </h4> 
+   <h6>All proceeds from presale will go into providing liquidity that will be will be permanently changed </h6> 
 
        </div>
 <span><h3 style={{color: "#fff"}}>See Proof Below</h3></span>
@@ -66,22 +66,14 @@ function Timer() {
 
 export default Timer
 
-const BorderBottom = styled.div`
-/* margin-top: 10%; */
-border-bottom: 1px solid white;
-display: flex;
-justify-content: space-between;
-`
+
 
 const Container = styled.div`
 height: 100vh;
 display: flex;
 justify-content: center;
-align-items: flex-start;
-.range{
-    width: 100%;
-    margin-top: 10%;
-}
+align-items: center;
+
 .arrow{
     margin-left: 15%;
 }
@@ -123,12 +115,7 @@ height: 4rem;
 background: transparent;
 border: 1px solid #43E8E1;
 }
-.count-down{
-    display: flex;
-}
-.count-separator{
-    margin: 1.3rem .5rem;
-}
+
 .reason {
     margin-left: 10%;
     margin-right: 20%;
@@ -145,21 +132,16 @@ color: white;
 }
 .reason-box1 {
   width: 95%;
-  box-shadow: 0px 4px 26px 22px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   position: relative;
   z-index: 1;
   background: inherit;
   overflow: hidden;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
   color: white;
-  padding: 20px;
-  font-size: 1.2rem;
-  font-weight: normal;
+  font-size:1.8rem;
+  font-weight: 200;
 line-height: 2rem;
 }
 .icon{
@@ -174,16 +156,14 @@ line-height: 2rem;
   left: 0;
   right: 0;
   bottom: 0;
-  box-shadow: 0px 4px 26px 22px rgba(0, 0, 0, 0.25);
   filter: blur(10px);
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 @media screen and (max-width: 700px) {
-    margin-top: 55%;
+    margin-top: 15%;
     flex-direction: column;
     .reason {
-    
     margin-left: 10%;
     margin-right:10%;
 }
@@ -216,7 +196,7 @@ margin-top: 10%;
     
 width: 75%;
 height: 4rem;
-margin: 0 auto;
+margin: 1.5rem 0 1.5rem 0;
 
 }
 ` 

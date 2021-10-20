@@ -29,7 +29,7 @@ export default Header
 
 
  const Wrapper = styled.div`
-height: 100vh;
+height: 80vh;
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -108,18 +108,6 @@ const Nav = styled.div`
      overflow: hidden;
      white-space: nowrap;
      color: white;
- h3{
-    /* font-family: 'Poppins', sans-serif;
-     font-weight: 700;
-     font-size: 2rem;
-     text-align: center;
-     margin-top: 10px;
-     letter-spacing: 2px;
-     overflow: hidden;
-     white-space: nowrap;
-     color: white; */
-     /* animation: textslide 5s infinite alternate; */
- }
      /* color: #14213D; */
  
  @keyframes textslide {
@@ -127,7 +115,7 @@ const Nav = styled.div`
          width: 0ch;
          color: #14213D;
      }50%{
-         width:55ch;
+         width:60vw;
          color:#FCA311;
      }
  }

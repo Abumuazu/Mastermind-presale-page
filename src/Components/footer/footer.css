@@ -1,10 +1,12 @@
 /* FOOTER */
 .footer {
 	width: 100%;
-	background: #0D0D2B;
+	background: #05051a;
 	display: block;
  }
-
+.logo{
+    width: 70%;
+}
  .inner-footer {
 	 width: 95%;
 	 margin: auto;
@@ -36,7 +38,6 @@
 .border1 {
 	height: 3px;
 	width: 40px;
-	background: #ff9800;
 	color: #43E8E1;
 	background-color: #43E8E1;
 	border: 0px;

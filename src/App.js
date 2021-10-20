@@ -14,7 +14,7 @@ function App() {
 <Header />
 <CountDown timeTillDate="8 31 2019, 9:00 am" timeFormat="MM DD YYYY, h:mm a" />
 <Timer />
-{/* <Stages /> */}
+<Stages />
 <Footer/>
     </div>
   );
