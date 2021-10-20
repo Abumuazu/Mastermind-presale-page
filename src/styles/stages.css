@@ -1,0 +1,10 @@
+.container{
+
+    
+    padding-top: 4rem;
+    background-color: #2B076E;
+    background-image: url('../Assests//stagebackground.svg');
+    background-repeat:no-repeat;
+    background-position: 75% 120%;
+   
+}
