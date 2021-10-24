@@ -13,11 +13,10 @@ function Timer() {
        <Container className= "Timer">
        
        <div className="reason one">
-       <h4 className= "header-text">  Why Choose MMD Token?</h4>
+       <h4 className= "header-text"> </h4>
        <div className="reason-box1">
 
    <h6>All proceeds from the presale will be used to provide liquidity that will be permanently locked on spooky swap. </h6> 
-
        </div>
 <span><h3 style={{color: "#fff"}}>See Proof Below</h3></span>
   <Button>
@@ -53,7 +52,7 @@ align-items: center;
     margin-left: 15%;
 }
 .lock{
-    width: 100%;
+    width: 80%;
     animation: grow-and-shrink 4000ms;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
@@ -74,6 +73,9 @@ height: 55%;
   font-size: 14px;
   font-weight: normal;
     line-height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .box:before {
   content: "";

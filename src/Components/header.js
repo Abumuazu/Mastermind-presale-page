@@ -12,7 +12,7 @@ function Header() {
 
 <Nav><h3 >PRESALE IS HERE!...</h3></Nav>
 <Wrapper className="header">
-<div className = "text">
+<div className = "header-text">
 <h1>The New DeFi <br />Standard</h1>
 <Button>
 <h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
@@ -36,7 +36,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 
-.text  {
+.header-text  {
     color: white;
     font-size: 2.2rem;
     font-style: normal;
@@ -44,8 +44,8 @@ align-items: center;
     margin-left: 10%;
     text-align: left;
     animation: slide-in 2000ms;
-
 }
+
 .img{
     margin-right: 10%;
     animation: slide-left 3000ms;
@@ -65,7 +65,7 @@ align-items: center;
 .Mastermind{
 display:none;
 }
-.text  {
+.header-text {
     font-size: 1.7rem;
     text-align: center;
     margin: 10%;

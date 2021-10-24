@@ -1,7 +1,5 @@
 import React from 'react'
 import "./footer.css"
-import Logo from "../../Assests/logo2.png"
-import FacebookIcon from '@mui/icons-material/Facebook';
 
 function footer() {
     return (
