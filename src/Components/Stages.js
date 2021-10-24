@@ -256,35 +256,32 @@ function Timer() {
     return (
        <Container className= "Timer">
        <div className="reason"> 
-       <h4 className= "header-text">  There are three stages to this presale</h4>
-{/* <div className="stages">
-// <div className="stage-box">
-// <h3>Stage 1</h3>
-// <p>buyers will get a bonus of 1 dex token for every  5 MMD bought</p>
-// </div>
-// <div className="stage-box">
-// <h3>Stage 2</h3>
-// <p>buyers will get a bonus of 1 dex token for every  10 MMD bought</p>
-// </div>
-// <div className="stage-box">
-// <h3>Stage 3</h3>
-// <p>buyers will get a bonus of 1 dex token for every  20 MMD bought</p>
-// </div>
-// </div> */}
+       <h4 className= "header-text">  How To Buy</h4>
+
        <div className="reason-box1">
 
-   <h4>STAGE 1: buyers will get a bonus of 1 dex token for every5 MMD bought </h4> 
-   <h4>STAGE 2: buyers will get a bonus of 1 dex token for every  10 MMD bought </h4> 
-   <h4>STAGE 3: buyers will get a bonus of 1 dex token for every  20 MMD bought</h4> 
+       
+
+<h5>1. Download MetaMask wallet </h5>
+<h5>2. Go to chainlist.org
+<ul>
+    <li>
+    i. type Fantom opera on the search column.
+    </li>
+    <li>
+    ii. Connect your wallet automatically to the Fantom network by clicking the connect icon.
+    </li>
+</ul>
+</h5>
+
+<br />
+<h5>3. Load your wallet with FTM</h5>
+
+<h5>4. Click on buy on the presale page to exchange FTM for MMD.</h5>
+<p>Skip the second step if your MetaMask wallet is already configure to interact with the Fantom network.</p>
        </div>
 
-   
-       {/* <div className="reason-box1">
-       <img className="icon" src={icon2} alt ="icon1" /> <h4>Mastermind will power the Mastermind NFT platform. This will provide a real use case for Mastermind token.</h4>
-</div> */}
-   {/* <div className="reason-box1">
-   <img className="icon" src={icon3} alt ="icon1" /> <h4>Hodlers will get rewarded for hodling. Rewards will come from fees on the network and ecosystem.</h4>
-</div> */}
+
        </div>
 
        <div className="box">
@@ -332,7 +329,7 @@ align-items: center;
 .box{
 width: 100%;
 min-width: 25%;
-
+animation: slide-left 3000ms;
 height: 55%;
   box-shadow: 0px 4px 26px 22px rgba(0, 0, 0, 0.25);
   border-radius: 1.3rem;
@@ -374,6 +371,7 @@ border: 1px solid #43E8E1;
 .reason {
     margin-left: 10%;
     margin-right: 20%;
+    animation: slide-in 2000ms;
 }
 .header-text1{
     text-align: center;
@@ -400,8 +398,14 @@ color: white;
   padding: 20px;
   font-size: 1.2rem;
   font-weight: normal;
-line-height: 2rem;
+line-height: 1.5rem;
 }
+li{
+    line-height: 1rem;  
+}
+/* h5 {
+    line-height: .2rem;  
+} */
 .icon{
     margin-right: 20px
 }
@@ -434,6 +438,7 @@ width: 70%;
 }
 .header-text {
 text-align: center;
+margin-top:-8rem;
 }
 }
 `

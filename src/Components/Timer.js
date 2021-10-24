@@ -11,11 +11,12 @@ import Image from "../Images/287877.png";
 function Timer() {
     return (
        <Container className= "Timer">
-       <div className="reason"> 
-       <h4 className= "header-text">  Why You Should  Choose MMD Token</h4>
+       
+       <div className="reason one">
+       <h4 className= "header-text">  Why Choose MMD Token?</h4>
        <div className="reason-box1">
 
-   <h6>All proceeds from presale will go into providing liquidity that will be will be permanently changed </h6> 
+   <h6>All proceeds from the presale will be used to provide liquidity that will be permanently locked on spooky swap. </h6> 
 
        </div>
 <span><h3 style={{color: "#fff"}}>See Proof Below</h3></span>
@@ -23,40 +24,10 @@ function Timer() {
   
 <h4>Contract Link </h4><img className="arrow" src={Arrow} alt ="arrow" />
 </Button>
-   
-       {/* <div className="reason-box1">
-       <img className="icon" src={icon2} alt ="icon1" /> <h4>Mastermind will power the Mastermind NFT platform. This will provide a real use case for Mastermind token.</h4>
-</div> */}
-   {/* <div className="reason-box1">
-   <img className="icon" src={icon3} alt ="icon1" /> <h4>Hodlers will get rewarded for hodling. Rewards will come from fees on the network and ecosystem.</h4>
-</div> */}
+     
        </div>
-
-       <div className="box">
-       {/* <h1 className= "header-text1"> Time To Presale </h1>
-       <div className="count-down">
-           <div className="div">
-           <h4></h4>
-            </div> <h1 className="count-separator">:</h1>
-            <div className="div">
-           <h4></h4>
-            </div> <h1 className="count-separator">:</h1>
-            <div className="div">
-           <h4></h4>
-            </div><h1 className="count-separator">:</h1>
-            <div className="div">
-           <h4></h4>
-            </div>
-       </div>
-       <BorderBottom>
-           <h3> 1 MMD = $0.065</h3> <h3> Stages= 3</h3> 
-       </BorderBottom>
-       <h3>Each stage contains 1.5 million token </h3>
-       <h3>Total Token available for sale = 4.5 Million </h3>
-       <img className="range" src={Range} alt="range" />
-       <Button>
-       <h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
-       </Button> */}
+       <div className="box two">
+       
        <img className="lock" src= {Image} alt="image"/>
        </div>
 
@@ -73,12 +44,19 @@ height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
-
+@media screen and (max-width: 531px) {
+    /* .container { display: flex; flex-flow: column; } */
+    .two { order: 1; }
+    .one { order: 2 }
+}
 .arrow{
     margin-left: 15%;
 }
 .lock{
     width: 100%;
+    animation: grow-and-shrink 4000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
 }
 .box{
 width: 100%;
@@ -176,6 +154,33 @@ width: 70%;
 text-align: center;
 }
 }
+@keyframes slide-in {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+  @keyframes slide-left {
+    from {
+      transform: translateY(-500%);
+    }
+    to {
+      transform: translateY(0%);
+    }
+  }
+  @keyframes grow-and-shrink {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `
 
 export const Button = styled.button `

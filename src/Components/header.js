@@ -2,13 +2,14 @@ import React from 'react'
 import back from "../Assests/headerImage.svg";
 import Arrow from '../Assests/arrow.svg';
 import "../styles/header.css"
-// import Nav from "./nav"
+
 
 import styled from "styled-components";
 
 function Header() {
     return (
 <div className= "cont"> 
+
 <Nav><h3 >PRESALE IS HERE!...</h3></Nav>
 <Wrapper className="header">
 <div className = "text">
@@ -21,6 +22,7 @@ function Header() {
 <img className="Mastermind" src={back} alt= "img" />
  </div>
 </Wrapper>
+
 </div>
     )
 }
@@ -41,10 +43,12 @@ align-items: center;
     font-weight: 1000;
     margin-left: 10%;
     text-align: left;
+    animation: slide-in 2000ms;
 
 }
 .img{
     margin-right: 10%;
+    animation: slide-left 3000ms;
 }
 .arrow{
     margin-left: 15%;
@@ -53,7 +57,7 @@ align-items: center;
     width: auto;
 }
 @media screen and (max-width:700px){
-    height: 80vh;
+    height: 50vh;
     flex-direction: column;
     display: flex;
 justify-content: center;
@@ -62,12 +66,29 @@ align-items: center;
 display:none;
 }
 .text  {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     text-align: center;
     margin: 10%;
 }
 
+
 }
+@keyframes slide-in {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+  @keyframes slide-left {
+    from {
+      transform: translateY(-500%);
+    }
+    to {
+      transform: translateY(0%);
+    }
+  }
 `
 const Button = styled.button `
 display: flex;
