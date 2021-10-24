@@ -99,6 +99,11 @@ border: 1px solid #43E8E1;
 .reason {
     margin-left: 10%;
     margin-right: 20%;
+    text-align: center;
+    display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 }
 .header-text1{
     text-align: center;
@@ -123,6 +128,7 @@ color: white;
   font-size:1.8rem;
   font-weight: 200;
 line-height: 2rem;
+text-align: center;
 }
 .icon{
     margin-right: 20px
@@ -191,6 +197,7 @@ flex-direction: row;
 justify-content: center;
 align-items: center;
 padding: 1rem 1rem 1rem 1.5rem;
+margin: 0 auto;
 width: 60%;
 height: 4.3rem;
 background: transparent;

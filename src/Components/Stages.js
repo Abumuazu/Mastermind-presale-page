@@ -198,6 +198,7 @@ font-weight: bold;
 font-size: 1.5rem;
 line-height: 150%;
 color: white;
+text-align: center;
 }
 .reason-box1 {
   width: 95%;
@@ -215,6 +216,7 @@ color: white;
   padding: 25px;
   font-size: 1.2rem;
   font-weight: normal;
+  text-align: center;
 /* line-height: 1.5rem; */
 }
 li{
@@ -243,11 +245,14 @@ li{
 @media screen and (max-width: 700px) {
     margin-top: 55%;
     flex-direction: column;
+   
     .reason {
     
-    margin-left: 5%;
-    margin-right:5%;
-    /* margin: 15px; */
+padding:20px;
+    margin: 0px;
+}
+.reason-box1{
+    padding-left: 10px;
 }
 .box{
     margin-left: 5%;
