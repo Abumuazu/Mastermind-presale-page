@@ -12,7 +12,7 @@ function App() {
     <div className="App">
 <Nav />
 <Header />
-<CountDown timeTillDate="8 31 2019, 9:00 am" timeFormat="MM DD YYYY, h:mm a" />
+<CountDown timeTillDate="11 10 2021, 9:00 am" timeFormat="MM DD YYYY, h:mm a" />
 <Timer />
 <Stages />
 <Footer/>

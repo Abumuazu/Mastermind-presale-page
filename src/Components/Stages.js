@@ -52,7 +52,7 @@ function Timer() {
            <h5 className= "list___header"> Connect to the presale smart contract </h5>
            <h5 className="list__paragraph"> Click on buy icon to on the presale page to connect to the presale smart contract.
 
-<br /> <br /><strong>Swap ETH for SHIB, LEASH or BONE</strong></h5>
+<br /> <br />Swap ETH for SHIB, LEASH or BONE</h5>
           
       </List>
       <Border />
@@ -74,9 +74,9 @@ function Timer() {
        <div className="box">
       
        <BorderBottom>
-           <h3> 1 MMD = $0.065</h3> <h3> Stages= 3</h3> 
+           <h3> 1 FTM= 34 MMD</h3>
        </BorderBottom>
-       <h3>Each stage contains 1.5 million token </h3>
+       <h3></h3>
        <h3>Total Token available for sale = 4.5 Million </h3>
        <img className="range" src={Range} alt="range" />
        <Button>
