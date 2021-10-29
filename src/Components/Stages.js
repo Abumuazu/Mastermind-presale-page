@@ -50,9 +50,7 @@ function Timer() {
                4
            </div>
            <h5 className= "list___header"> Connect to the presale smart contract </h5>
-           <h5 className="list__paragraph"> Click on buy icon to on the presale page to connect to the presale smart contract.
-
-<br /> <br />Swap ETH for SHIB, LEASH or BONE</h5>
+           <h5 className="list__paragraph"> Click on buy icon to on the presale page to connect to the presale smart contract.</h5>
           
       </List>
       <Border />
