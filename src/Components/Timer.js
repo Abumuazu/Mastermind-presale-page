@@ -6,7 +6,7 @@ import icon2 from "../Assests/icon2.svg"
 import icon3 from "../Assests/icon3.svg"
 import Range from "../Assests/range.svg"
 import Arrow from '../Assests/arrow.svg';
-import Image from "../Images/287877.png";
+import Image from "../Images/2878777.png";
 
 function Timer() {
     return (
