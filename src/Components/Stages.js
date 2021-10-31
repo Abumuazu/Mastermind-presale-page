@@ -9,7 +9,12 @@ import Range from "../Assests/range.svg"
 import Arrow from '../Assests/arrow.svg';
 import Image from "../Images/287877.png";
 
-function Timer() {
+function Timer({ showModal }) {
+
+    function handleClick(){
+        showModal(true);
+    }
+
     return (
        <Container className= "Timer">
        <div className="reason"> 
@@ -77,7 +82,7 @@ function Timer() {
        <h3></h3>
        <h3>Total Token available for sale = 4.5 Million </h3>
        <img className="range" src={Range} alt="range" />
-       <Button>
+       <Button onClick={handleClick}>
        <h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
        </Button>
        {/* <img className="lock" src= {Image} alt="image"/> */}

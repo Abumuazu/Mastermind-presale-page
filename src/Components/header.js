@@ -6,7 +6,12 @@ import "../styles/header.css"
 
 import styled from "styled-components";
 
-function Header() {
+function Header({ showModal }) {
+
+    function handleClick(){
+        showModal(true);
+    }
+
     return (
 <div className= "cont"> 
 
@@ -14,7 +19,7 @@ function Header() {
 <Wrapper className="header">
 <div className = "header-text">
 <h1>The New DeFi <br />Standard</h1>
-<Button>
+<Button onClick={handleClick}>
 <h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
 </Button>
  </div>
