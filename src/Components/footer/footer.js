@@ -6,7 +6,7 @@ function footer() {
         <div>
            <div className="footer">
            
-           <div style ={{marginBottom: '10%'}} class="rounded-social-buttons">
+           <div style ={{marginBottom: '5%'}} class="rounded-social-buttons">
                     <a className="social-button facebook" href="https://www.facebook.com/profile.php?id=100071318033104" target="_blank"><i className="">
 
             <svg class="glow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
