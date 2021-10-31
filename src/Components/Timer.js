@@ -16,7 +16,7 @@ function Timer() {
        <h4 className= "header-text"> </h4>
        <div className="reason-box1">
 
-   <h6>All proceeds from the presale will be used to provide liquidity that will be permanently locked on spooky swap. </h6> 
+<h6 style= {{color: '#FCA311'}} id="anima">All proceeds from the presale will be used to provide liquidity that will be permanently locked on spooky swap. </h6>
        </div>
 <span><h3 style={{color: "#fff"}}>See Proof Below</h3></span>
   <Button>
@@ -37,12 +37,46 @@ function Timer() {
 export default Timer
 
 
+const Nav = styled.div`
+/* ANIM */
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    padding: 10px 0;
+     animation: textslide 5s infinite alternate;
+     margin: 0 auto;
+     font-family: 'Poppins', sans-serif;
+     font-weight: 700;
+     font-size: 1.5rem;
+     text-align: center;
+     margin-top: 10px;
+     letter-spacing: 2px;
+     overflow: hidden;
+     white-space: nowrap;
+     color: white;
+     /* color: #14213D; */
+ 
+ @keyframes textslide {
+     0%{
+         width: 0ch;
+         color: #14213D;
+     }50%{
+         width:60vw;
+         color:#FCA311;
+     }
+ }
+`
 
 const Container = styled.div`
 height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
+#anim{
+  color: black
+}
 @media screen and (max-width: 531px) {
     /* .container { display: flex; flex-flow: column; } */
     .two { order: 1; }
