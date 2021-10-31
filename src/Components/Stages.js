@@ -31,7 +31,7 @@ function Timer() {
                2
            </div>
            <h5 className= "list___header">Switch to Fantom Opera Mainnet</h5>
-           <h5 className="list__paragraph">Visit <a href="https://chainlist.org/">chainlist.org</a><br /> i. type Fantom opera on the search column.<br />
+           <h5 className="list__paragraph">Visit <a href="https://chainlist.org/">chainlist.org</a><br /> i. Type Fantom opera on the search column.<br />
  ii. Switch your wallet network to the Fantom network by clicking the connect icon and approve button to switch network automatically.</h5>
           
       </List>
@@ -41,7 +41,7 @@ function Timer() {
                3
            </div>
            <h5 className= "list___header">Send Fantom to your wallet</h5>
-           <h5 className="list__paragraph"> You can buy Fantom (FTM) and transfer it to your MetaMask Wallet from exchanges like Coinbase, Binance, Okexx and Huobi etc. Make sure to use the FTM - Fantom network when transfering FTM.</h5>
+           <h5 className="list__paragraph"> You can buy Fantom (FTM) and transfer it to your MetaMask Wallet from exchanges like, Binance, Okexx and Huobi etc. Make sure to use the FTM - Fantom network when transfering FTM.</h5>
           
       </List>
       <Border />
@@ -59,7 +59,7 @@ function Timer() {
                5
            </div>
            <h5 className= "list___header">Swap FTM for MMD</h5>
-           <h5 className="list__paragraph"> You can swap as soon as you have FTM available! There is a maximum individual cap of 2000 FTM and no minimum cap.</h5>
+           <h5 className="list__paragraph"> You can swap as soon as you have FTM available! There is a maximum individual cap of 1000 FTM and no minimum cap.</h5>
           
       </List>
       <Border />
