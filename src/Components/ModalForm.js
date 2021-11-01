@@ -2,10 +2,20 @@ import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import '../styles/modalform.css';
-
-
 import styled from "styled-components";
-const presaleAddress = "0xcB92902Dd55329AaF693cE0E751333E6ba148452"
+import { IconContext } from "react-icons";
+import { FaWallet, FaShoppingCart } from 'react-icons/fa';
+import { BsCoin, BsCashCoin } from 'react-icons/bs';
+
+/*
+Testing on Testnet...
+const presaleAddress = "0x663873bb4907645E53151F85acaDeED84CE5693B";
+const mmdAddress = "0x51Bc2a2cABbFE77C425CA07b379256def37e9F31";
+
+*/
+
+// Mainnet addresses
+const presaleAddress = "0xb2F53dAbD3A01A51C919540A118520c3324d7944";
 const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
 const minABI = [
     // balanceOf
@@ -44,6 +54,7 @@ function ModalForm({ hideModal }){
     const [web3Installed, setWeb3Installed] = useState(false);
     const [ftmBal, setFtmBal] = useState(0);
     const [mmdBal, setMmdBal] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     
     async function connectWallet(){
@@ -57,7 +68,7 @@ function ModalForm({ hideModal }){
             
         }else{
             setError(true);
-            setMessage("Web3 Not Detected");
+            setMessage("Web3 Wallet Not Detected");
         }
 
     }
@@ -70,7 +81,7 @@ function ModalForm({ hideModal }){
         const dots = "...";
         const firstFour = acct.substring(0, 4);
         const lastFour = acct.substring(38,42);
-        const displayAcct = firstFour + dots + lastFour;
+        const displayAcct = " " + firstFour + dots + lastFour;
         setFormattedAcct(displayAcct);
     }
 
@@ -96,6 +107,8 @@ function ModalForm({ hideModal }){
             
         } catch (error) {
             console.log(error);
+            setError(true);
+            setMessage("MetaMask Wallet Connection Error");
         }
     }
 
@@ -119,6 +132,8 @@ function ModalForm({ hideModal }){
             setMessage("Wallet connected!");
         } catch (error) {
             console.log(error);
+            setError(true);
+            setMessage("Web3 Wallet Connection Error");
         }
 
     }
@@ -177,6 +192,7 @@ function ModalForm({ hideModal }){
             
             if(ftmAmt <= 0) throw {message: "FTM Amount Must Be Greater Than Zero", custom: true};
             
+            setIsLoading(true);
             // const gasPrice = await window.web3.eth.getGasPrice();
             const receipt = await window.web3.eth.sendTransaction({
                 from: account,
@@ -202,12 +218,30 @@ function ModalForm({ hideModal }){
             if(transactionReceipt.status == '0x01'){
                 setSuccess(true);
                 setError(false);
-                setMessage("Presale Purchase Successful. Thank You");
+                
+                const link = `https://ftmscan.com/tx/${receipt.transactionHash}`;
+                setMessage(<a style={{ color: "green", textDecoration: "none" }} href={link} target="_blank">Successful. <span style={{ textDecoration: "underline", color: "green" }}> Click here to confirm</span> </a>);
                 setFtmAmt("");
+                setIsLoading(false);
+
+                // Load the balances
+                getFtmBalance(account);
+                getMmdBalance(account);
+
+
+                
             }else{
                 setError(true);
                 setMessage("Presale Purchase Failed");
+                setIsLoading(false);
+
+                // Load the balances
+                getFtmBalance(account);
+                getMmdBalance(account);
+
             }
+
+            
 
 
         } catch (error) {
@@ -220,6 +254,13 @@ function ModalForm({ hideModal }){
             }else{
                 setMessage("Transaction Failed");
             }
+            setIsLoading(false);
+
+            // Load the balances
+            getFtmBalance(account);
+            getMmdBalance(account);
+
+
         }
     }
 
@@ -256,8 +297,6 @@ function ModalForm({ hideModal }){
 
     
     useEffect(async () => {
-        // const walletAccounts = await window.web3.eth.getAccounts();
-        // console.log(walletAccounts);
         if(window.ethereum){
             setWeb3Installed(true);
             setIsMetaMask(true);
@@ -273,23 +312,43 @@ function ModalForm({ hideModal }){
 
 
     useEffect(() => {
-        const notify = setTimeout(() => {
-          setMessage('');
-        }, 3000);
-        return () => clearTimeout(notify);
-      }, [message]);
-
-    // MetaMask account changed
-    window.ethereum.on('accountsChanged', function (accounts) {
-        if(typeof account != "undefined"){
-            setAccount(accounts[0]);
+        if(success){
+            const notify = setTimeout(() => {
+                setMessage('');
+            }, 6000);
+            return () => clearTimeout(notify);
+        }else{
+            const notify = setTimeout(() => {
+                setMessage('');
+              }, 3000);
+              return () => clearTimeout(notify);
         }
         
+      }, [message]);
+
+    useEffect(() => {
+        if(window.ethereum){
+            // MetaMask account changed
+            window.ethereum.on('accountsChanged', function (accounts) {
+                if(typeof account != "undefined"){
+                    setAccount(accounts[0]);
+                    // Load the balances
+                    getFtmBalance(accounts[0]);
+                    getMmdBalance(accounts[0]);
+                    setConnected(true);
+
+                }
+                
+            });
+
+            // Reload the dApp interface on chain change
+            window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+
+        }
     });
+    
 
-    // Reload the dApp interface on chain change
-    window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
-
+    
     // Effects of account change
     useEffect(() => {
         getMmdBalance(account);
@@ -301,13 +360,17 @@ function ModalForm({ hideModal }){
     
 
     return(
-        <>
+        <IconContext.Provider value={{ color: "#ffffff", className: "global-class-name" }}>
             <ModalWrapper>
                 <ModalContent>
                     <CloseBtn onClick={closeModal}>&times;</CloseBtn>
                     <ModalHeader>
                         <ConnectWallet onClick={connectWallet}>
-                            {connected ? formattedAcct : "Connect Wallet"}
+                            <FaWallet />
+                        {/* <span class="material-icons-outlined">
+                            account_balance_wallet
+                        </span> */}
+                            {connected ? formattedAcct : " Connect Wallet"}
                         </ConnectWallet>
                             
                         
@@ -318,7 +381,7 @@ function ModalForm({ hideModal }){
                     </ModalHeader>
                     <ModalBody>
                         <Input value={ftmAmt} onChange={handleChange} placeholder="Enter FTM Amount"/>
-                        <BuyBtn onClick={buyPresale}>Buy MMD</BuyBtn>
+                        <BuyBtn disabled={isLoading} onClick={buyPresale}>{!isLoading ? <FaShoppingCart/> : ""}{isLoading ? <Spinner className="fa fa-spinner fa-spin"></Spinner> : " Buy MMD"}</BuyBtn>
                     </ModalBody>
                     <ModalFooter>
                         {
@@ -327,8 +390,8 @@ function ModalForm({ hideModal }){
                             <>
                             <DisconnectWallet onClick={disconnectWallet}>Disconnect Wallet</DisconnectWallet>
                             <WalletBalances>
-                                <DisplayBal>FTM Balance: {ftmBal}</DisplayBal>
-                                <DisplayBal>MMD Balance: {mmdBal}</DisplayBal>
+                                <DisplayBal><BsCoin/> FTM Balance: {ftmBal}</DisplayBal>
+                                <DisplayBal><BsCashCoin/> MMD Balance: {mmdBal}</DisplayBal>
                             </WalletBalances>
                             </>
                             :
@@ -340,7 +403,7 @@ function ModalForm({ hideModal }){
                 </ModalContent>
             </ModalWrapper>
             
-        </>
+        </IconContext.Provider>
     );
 }
 
@@ -362,7 +425,7 @@ const ModalWrapper = styled.div`
 
 const ModalContent = styled.div`
     @media all and (min-width: 0px){
-        background-color: #ccc;
+        background-color: #20203C;
         margin: 4em auto; /* 2em from the top and centered */
         padding: 0.3em 0.21em;
         border: 1px solid #888;
@@ -435,6 +498,12 @@ const MsgDisplay = styled.div`
         text-align: center;
         padding: 0;
         border-radius: 12px;
+        margin: 0;
+
+        p{
+            margin: 0;
+            margin-top: 0.5em;
+        }
     }
     
     @media all and (min-width: 625px){
@@ -444,7 +513,8 @@ const MsgDisplay = styled.div`
         p{
             width: 70%;
             text-align: center;
-            margin-left: 3em;
+            margin: 0;
+            margin-left: 2em;
         }
     }
 `;
@@ -466,19 +536,23 @@ const CloseBtn = styled.span`
 
 const ConnectWallet = styled.button`
     @media all and (min-width: 0px){
-        width: 142px;
+        width: 162px;
         height: 42px;
         color: white;
         background-color: #00ace6;
         border: 1px solid #00ace6;
         border-radius: 50px;
-        padding: 0.8em 1.25em;
+        padding: 0.6em 1em;
         font-weight: bold;
-        font-size: 0.9rem;
+        font-size: 0.75rem;
     }
 
     @media all and (min-width: 625px){
-        width: 200px;
+        width: 250px;
+        font-size: 0.9rem;
+        padding: 0.8em 1.25em;
+
+
     }
     
 `;
@@ -501,8 +575,15 @@ const DisconnectWallet = styled.button`
     @media all and (min-width: 625px){
         width: 200px;
         margin-top: 0;
-        margin-bottom: 0;
+        margin-bottom: 0.25em;
     }
+`;
+
+const Spinner = styled.i`
+    display: inline-block;
+    font-size:17px;
+    color: #fff;
+    padding: 0 18px;
 `;
 
 const WalletBalances = styled.div`
@@ -513,6 +594,8 @@ const DisplayBal = styled.p`
     @media all and (min-width: 0px){
         font-weight: bold;
         margin: 0.25em;
+        color: #ffffff;
+        font-size: 12px;
     }
 `;
 
@@ -524,14 +607,23 @@ const Input = styled.input`
         box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
         border-radius: 10px;
         width: 50%;
+        font-size: 12px;
         &:focus{
             border: none;
             outline: none;
+        }
+
+        &::placeholder{
+            font-size: 11px;
         }
     }
 
     @media all and (min-width: 625px){
         margin-left: 1em;
+
+        &::placeholder{
+            font-size: 15px;
+        }
     }
     
 `;
