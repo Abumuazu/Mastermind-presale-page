@@ -2,13 +2,35 @@ import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import '../styles/modalform.css';
+
+
 import styled from "styled-components";
-// import ContractAddress from "../ContractDetails/ContractAddress.json";
-const ContractAddress = "0x99Bd820912fF49E340b244A97B15d74BcEd83d94"
+const presaleAddress = "0xcB92902Dd55329AaF693cE0E751333E6ba148452"
+const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
+const minABI = [
+    // balanceOf
+    {
+        "constant":true,
+        "inputs":[{"name":"_owner","type":"address"}],
+        "name":"balanceOf",
+        "outputs":[{"name":"balance","type":"uint256"}],
+        "type":"function"
+    },
+    // decimals
+    {
+        "constant":true,
+        "inputs":[],
+        "name":"decimals",
+        "outputs":[{"name":"","type":"uint8"}],
+        "type":"function"
+    }
+];
+
 
 
 
 function ModalForm({ hideModal }){
+
 
     // States
     const [message, setMessage] = useState("");
@@ -20,6 +42,8 @@ function ModalForm({ hideModal }){
     const [connected, setConnected] = useState(false);
     const [isMetaMask, setIsMetaMask] = useState(false);
     const [web3Installed, setWeb3Installed] = useState(false);
+    const [ftmBal, setFtmBal] = useState(0);
+    const [mmdBal, setMmdBal] = useState(0);
 
     
     async function connectWallet(){
@@ -28,7 +52,9 @@ function ModalForm({ hideModal }){
                 await loadMetaMaskWeb3();
             }else{
                 await loadWeb3();
+
             }
+            
         }else{
             setError(true);
             setMessage("Web3 Not Detected");
@@ -61,9 +87,11 @@ function ModalForm({ hideModal }){
                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                setAccount(accounts[0]);
                formatWallet(accounts[0]);
+               getFtmBalance(accounts[0]);
+               getMmdBalance(accounts[0]);
                setConnected(true);
                setError(false);
-               setMessage("Wallet connected!");
+               setMessage("Wallet Connected");
             }
             
         } catch (error) {
@@ -82,9 +110,11 @@ function ModalForm({ hideModal }){
                 return;
             }
 
-            const accounts = await window.web3.eth.getAccounts()
+            const accounts = await window.web3.eth.getAccounts();
             setAccount(accounts[0]);
             formatWallet(accounts[0]);
+            getFtmBalance(accounts[0]);
+            getMmdBalance(accounts[0]);
             setConnected(true);
             setMessage("Wallet connected!");
         } catch (error) {
@@ -112,11 +142,14 @@ function ModalForm({ hideModal }){
             }
 
 
-            const accounts = await window.web3.eth.getAccounts()
+            const accounts = await window.web3.eth.getAccounts();
             setAccount(accounts[0]);
             formatWallet(accounts[0]);
+            getFtmBalance(accounts[0]);
+            getMmdBalance(accounts[0]);
             setConnected(true);
-            setMessage("Wallet connected!");
+            
+            setMessage("Wallet Connected");
         } catch (error) {
             if(error.code === -32002){
                 setError(true);
@@ -147,18 +180,28 @@ function ModalForm({ hideModal }){
             // const gasPrice = await window.web3.eth.getGasPrice();
             const receipt = await window.web3.eth.sendTransaction({
                 from: account,
-                to: ContractAddress,
+                to: presaleAddress,
                 value: window.web3.utils.toWei(ftmAmt, 'ether'),
                 gas: 500000
             });
 
-            console.log("Receipt: " + receipt);
+            //
+            const expectedBlockTime = 1000;
+            const sleep = (milliseconds) => {
+                return new Promise(resolve => setTimeout(resolve, milliseconds))
+            }
 
-            
-            const data = await window.web3.eth.getTransactionReceipt(receipt.transactionHash);
-            console.log("Data: " + data);
-            if(data.status == '0x01'){
+            let transactionReceipt = null
+            while (transactionReceipt == null) { // Waiting expectedBlockTime until the transaction is mined
+                transactionReceipt = await window.web3.eth.getTransactionReceipt(receipt.transactionHash);
+                await sleep(expectedBlockTime)
+            }
+
+            //
+
+            if(transactionReceipt.status == '0x01'){
                 setSuccess(true);
+                setError(false);
                 setMessage("Presale Purchase Successful. Thank You");
                 setFtmAmt("");
             }else{
@@ -180,6 +223,32 @@ function ModalForm({ hideModal }){
         }
     }
 
+    async function getFtmBalance(acct){
+        if(acct != ""){
+           const bal = await window.web3.utils.fromWei(await window.web3.eth.getBalance(acct));
+           const roundedBal = Number((parseFloat(bal)).toFixed(5));
+           setFtmBal(roundedBal);
+
+        }
+    }
+
+    async function getMmdBalance(acct){
+        if(acct != ""){
+            const mmdContract = new window.web3.eth.Contract(minABI, mmdAddress);
+            const bal = await mmdContract.methods.balanceOf(acct).call();
+            const roundedBal = Number((parseFloat(bal)/10**18).toFixed(5));
+            setMmdBal(roundedBal);
+        }
+    }
+
+    function disconnectWallet(){
+        setConnected(false);
+        setAccount("");
+        setFtmAmt("")
+        setFtmBal(0);
+        setMmdBal(0);
+    }
+
     function handleChange(e){
         setFtmAmt(e.target.value);
         
@@ -187,6 +256,8 @@ function ModalForm({ hideModal }){
 
     
     useEffect(async () => {
+        // const walletAccounts = await window.web3.eth.getAccounts();
+        // console.log(walletAccounts);
         if(window.ethereum){
             setWeb3Installed(true);
             setIsMetaMask(true);
@@ -199,6 +270,35 @@ function ModalForm({ hideModal }){
         }
 
     }, []);
+
+
+    useEffect(() => {
+        const notify = setTimeout(() => {
+          setMessage('');
+        }, 3000);
+        return () => clearTimeout(notify);
+      }, [message]);
+
+    // MetaMask account changed
+    window.ethereum.on('accountsChanged', function (accounts) {
+        if(typeof account != "undefined"){
+            setAccount(accounts[0]);
+        }
+        
+    });
+
+    // Reload the dApp interface on chain change
+    window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+
+    // Effects of account change
+    useEffect(() => {
+        getMmdBalance(account);
+        getFtmBalance(account);
+        formatWallet(account);
+    }, [account]);
+
+
+    
 
     return(
         <>
@@ -220,6 +320,23 @@ function ModalForm({ hideModal }){
                         <Input value={ftmAmt} onChange={handleChange} placeholder="Enter FTM Amount"/>
                         <BuyBtn onClick={buyPresale}>Buy MMD</BuyBtn>
                     </ModalBody>
+                    <ModalFooter>
+                        {
+                            connected
+                            ?
+                            <>
+                            <DisconnectWallet onClick={disconnectWallet}>Disconnect Wallet</DisconnectWallet>
+                            <WalletBalances>
+                                <DisplayBal>FTM Balance: {ftmBal}</DisplayBal>
+                                <DisplayBal>MMD Balance: {mmdBal}</DisplayBal>
+                            </WalletBalances>
+                            </>
+                            :
+                            ""
+                        }
+                        
+                    </ModalFooter>
+
                 </ModalContent>
             </ModalWrapper>
             
@@ -244,14 +361,17 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContent = styled.div`
-    background-color: #ccc;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 1em;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 610px;
-    border-radius: 20px;
-    border: 5px outset #fefefe;
+    @media all and (min-width: 0px){
+        background-color: #ccc;
+        margin: 4em auto; /* 2em from the top and centered */
+        padding: 0.3em 0.21em;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 610px;
+        border-radius: 20px;
+        border: 5px outset #fefefe;
+    }
+    
 `;
 
 
@@ -292,6 +412,20 @@ const ModalBody = styled.div`
         align-items: flex-start;
     }
     
+`;
+
+const ModalFooter = styled.div`
+    @media all and (min-width: 0px){
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2em;
+    }
+
+    @media all and (min-width: 625px){
+        flex-direction: row;
+    }
 `;
 
 const MsgDisplay = styled.div`
@@ -349,18 +483,57 @@ const ConnectWallet = styled.button`
     
 `;
 
-const Input = styled.input`
-    background-color: white;
-    padding: 10px;
-    border: 0;
-    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
-    border-radius: 10px;
-    width: 50%;
-    margin-left: 1em;
-    &:focus{
-        border: none;
-        outline: none;
+const DisconnectWallet = styled.button`
+    @media all and (min-width: 0px){
+        width: 162px;
+        height: 42px;
+        color: white;
+        background-color: red;
+        border: 1px solid red;
+        border-radius: 50px;
+        padding: 0.8em 1.25em;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-top: 1em;
+        margin-bottom: 0.5em;
     }
+
+    @media all and (min-width: 625px){
+        width: 200px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+`;
+
+const WalletBalances = styled.div`
+    text-align: center;
+`;
+
+const DisplayBal = styled.p`
+    @media all and (min-width: 0px){
+        font-weight: bold;
+        margin: 0.25em;
+    }
+`;
+
+const Input = styled.input`
+    @media all and (min-width: 0px){
+        background-color: white;
+        padding: 10px;
+        border: 0;
+        box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+        border-radius: 10px;
+        width: 50%;
+        &:focus{
+            border: none;
+            outline: none;
+        }
+    }
+
+    @media all and (min-width: 625px){
+        margin-left: 1em;
+    }
+    
 `;
 
 const BuyBtn = styled.button`
