@@ -137,7 +137,7 @@ justify-content: center;
 align-items: center;
 .range{
     width: 100%;
-    margin-top: 10%;
+    margin-top: 25%;
 }
 .arrow{
     margin-left: 15%;
@@ -275,6 +275,7 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
+cursor: pointer;
 padding: 1rem 1rem 1rem 1.5rem;
 width: 60%;
 height: 4.3rem;
@@ -283,7 +284,7 @@ border-radius: 2rem;
 color: white;
 font-weight: bold;
 border: 1px solid #43E8E1;
-margin-top: 10%;
+margin-top: 25%;
 @media screen and (max-width: 700px) {
     
 width: 75%;

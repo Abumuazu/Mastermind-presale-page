@@ -437,7 +437,6 @@ const ModalContent = styled.div`
     
 `;
 
-
 const ModalHeader = styled.div`
     @media all and (min-width: 0px){
         display: flex;
@@ -535,6 +534,7 @@ const CloseBtn = styled.span`
 `;
 
 const ConnectWallet = styled.button`
+cursor: pointer;
     @media all and (min-width: 0px){
         width: 162px;
         height: 42px;
@@ -558,6 +558,7 @@ const ConnectWallet = styled.button`
 `;
 
 const DisconnectWallet = styled.button`
+cursor: pointer;
     @media all and (min-width: 0px){
         width: 162px;
         height: 42px;
@@ -637,6 +638,7 @@ const BuyBtn = styled.button`
     font-weight: bold;
     font-size: 0.8rem;
     margin: 1em;
+    cursor: pointer;
 `;
 
 

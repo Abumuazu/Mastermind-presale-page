@@ -230,6 +230,7 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
+cursor: pointer;
 padding: 1rem 1rem 1rem 1.5rem;
 margin: 0 auto;
 width: 60%;

@@ -100,6 +100,7 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
+cursor: pointer;
 padding: 1rem 1rem 1rem 1.5rem;
 width: 60%;
 height: 4.3rem;
