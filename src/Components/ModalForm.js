@@ -367,14 +367,11 @@ function ModalForm({ hideModal }){
                     <ModalHeader>
                         <ConnectWallet onClick={connectWallet}>
                             <FaWallet />
-                        {/* <span class="material-icons-outlined">
-                            account_balance_wallet
-                        </span> */}
                             {connected ? formattedAcct : " Connect Wallet"}
                         </ConnectWallet>
                             
                         
-                        <MsgDisplay>
+                        <MsgDisplay style={{ visibility: message != "" ? "visible" : "hidden" }}>
                             <p style={{ color: error ? "red" : "green", fontWeight: "bold" }}>{message}</p>
                         </MsgDisplay>
                         
@@ -498,10 +495,10 @@ const MsgDisplay = styled.div`
         padding: 0;
         border-radius: 12px;
         margin: 0;
+        margin-top: 0.5em;
 
         p{
             margin: 0;
-            margin-top: 0.5em;
         }
     }
     

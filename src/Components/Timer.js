@@ -1,14 +1,18 @@
 import React from 'react';
-import styled from "styled-components"
-import "../styles/reason.css"
-import icon1 from "../Assests/icon1.svg"
-import icon2 from "../Assests/icon2.svg"
-import icon3 from "../Assests/icon3.svg"
-import Range from "../Assests/range.svg"
+import styled from "styled-components";
+import "../styles/reason.css";
+import icon1 from "../Assests/icon1.svg";
+import icon2 from "../Assests/icon2.svg";
+import icon3 from "../Assests/icon3.svg";
+import Range from "../Assests/range.svg";
 import Arrow from '../Assests/arrow.svg';
 import Image from "../Images/2878777.png";
 
-function Timer() {
+function Timer({ showModal }) {
+
+  function handleClick(){
+    showModal(true);
+  }
     return (
        <Container className= "Timer">
        
@@ -19,10 +23,9 @@ function Timer() {
 <h6 style= {{color: '#FCA311'}} id="anima">All proceeds from the presale will be used to provide liquidity that will be permanently locked on spooky swap. </h6>
        </div>
 <span><h3 style={{color: "#fff"}}>See Proof Below</h3></span>
-  <Button>
-  
-<h4>Contract Link </h4><img className="arrow" src={Arrow} alt ="arrow" />
-</Button>
+  <Button onClick={handleClick}>
+    <h4>Contract Link </h4><img className="arrow" src={Arrow} alt ="arrow" />
+  </Button>
      
        </div>
        <div className="box two">
