@@ -44,3 +44,9 @@
     color:  white;
     text-align: center;
 }
+
+@media all and (max-width: 701px){
+	.countdown-wrapper{
+		margin-bottom: 200px;
+	}
+}

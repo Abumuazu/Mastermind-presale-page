@@ -4,3 +4,12 @@ ModalContent{
     background-position: 75% 120%;
 
 }
+
+.success-msg{
+    color: green;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
