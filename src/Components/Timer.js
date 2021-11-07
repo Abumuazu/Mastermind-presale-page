@@ -163,6 +163,7 @@ color: white;
   font-weight: 200;
 line-height: 2rem;
 text-align: center;
+
 }
 .icon{
     margin-right: 20px
@@ -183,9 +184,11 @@ text-align: center;
 @media screen and (max-width: 700px) {
     margin-top: 15%;
     flex-direction: column;
+    height: 100vh;
     .reason {
     margin-left: 10%;
     margin-right:10%;
+   
 }
 .box{
 margin: 0 auto;
