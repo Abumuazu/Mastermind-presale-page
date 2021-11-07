@@ -1,6 +1,6 @@
-
 import React from 'react';
-import styled from "styled-components"
+import styled from "styled-components";
+import Web3 from 'web3';
 import "../styles/reason.css"
 import icon1 from "../Assests/icon1.svg"
 import icon2 from "../Assests/icon2.svg"
@@ -13,6 +13,49 @@ function Timer({ showModal }) {
 
     function handleClick(){
         showModal(true);
+    }
+
+    async function addSwitchNet(){
+        if(window.ethereum){
+            console.log("On addSwitch...");
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0xFA' }],
+                });
+            } catch (switchError) {
+                console.log(switchError);
+                if(switchError.code === 4902){
+                    
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [
+                                {
+                                    chainId: '0xFA',
+                                    chainName: 'Fantom Opera',
+                                    rpcUrls: ['https://rpc.ftm.tools/'],
+                                    nativeCurrency: {
+                                        name: 'Fantom',
+                                        symbol: 'FTM',
+                                        decimals: 18,
+                                        blockExplorerUrls: ['https://ftmscan.com/'],
+                                    },
+                                }
+                            ],
+                        });
+                    } catch (addError) {
+                        // handle "add" error
+                        console.log("Add Error: ", addError);
+                    }
+                }
+            }
+
+        }else{
+            // setError(true);
+            // setMessage("Please Change To Fantom Network");
+            return;
+        }
     }
 
     return (
@@ -35,10 +78,8 @@ function Timer({ showModal }) {
            <div className="list__number">
                2
            </div>
-           <h5 className= "list___header">Switch to Fantom Opera Mainnet</h5>
-           <h5 className="list__paragraph">Visit <a href="https://chainlist.org/">chainlist.org</a><br /> i. Type Fantom opera on the search column.<br />
- ii. Switch your wallet network to the Fantom network by clicking the connect icon and approve button to switch network automatically.</h5>
-          
+           <h5 className= "list___header">Add or Switch to Fantom Opera Mainnet</h5>
+           <h5 className="list__paragraph">Click <AddFTMNetBtn onClick={addSwitchNet}>here</AddFTMNetBtn> to automatically add or switch to the Fantom Mainnet.</h5>          
       </List>
       <Border />
       <List className="list">
@@ -275,6 +316,14 @@ const Container = styled.div`
 
 }
 `
+
+const AddFTMNetBtn = styled.button`
+    border: 1px solid #4dffff;
+    border-radius: 9px;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+`;
 
 export const Button = styled.button `
 display: flex;
