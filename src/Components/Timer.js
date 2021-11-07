@@ -7,6 +7,7 @@ import icon3 from "../Assests/icon3.svg";
 import Range from "../Assests/range.svg";
 import Arrow from '../Assests/arrow.svg';
 import Image from "../Images/2878777.png";
+import PresaleUpdate from './PresaleUpdate';
 
 function Timer({ showModal }) {
 
@@ -14,26 +15,29 @@ function Timer({ showModal }) {
     showModal(true);
   }
     return (
-       <Container className= "Timer">
-       
-       <div className="reason one">
-       <h4 className= "header-text"> </h4>
-       <div className="reason-box1">
 
-<h6 style= {{color: '#FCA311'}} id="anima">All proceeds from the presale will be used to provide liquidity that will be permanently locked on spooky swap. </h6>
-       </div>
-<span><h3 style={{color: "#fff"}}>See Proof Below</h3></span>
-  <Button onClick={handleClick}>
-    <h4>Contract Link </h4><img className="arrow" src={Arrow} alt ="arrow" />
-  </Button>
+      <Container className= "Timer">
+       
+        <div className="reason one">
+          <h4 className= "header-text"> </h4>
+          <div className="reason-box1">
+            <h6 style= {{color: '#FCA311'}} id="anima">All proceeds from the presale will be used to provide liquidity that will be permanently locked on spooky swap. </h6>
+            <PresaleUpdate/>
+          </div>
+          <span>
+            <h3 style={{color: "#fff"}}>See Proof Below</h3>
+          </span>
+          <Button onClick={handleClick}>
+            <h4>Contract Link </h4><img className="arrow" src={Arrow} alt ="arrow" />
+          </Button>
      
-       </div>
-       <div className="box two">
+        </div>
+        <div className="box two">
        
-       <img className="lock" src= {Image} alt="image"/>
-       </div>
+          <img className="lock" src= {Image} alt="image"/>
+        </div>
 
-       </Container>
+      </Container>
     )
 }
 
@@ -184,7 +188,7 @@ text-align: center;
   margin-bottom: 10px;
 }
 @media screen and (max-width: 700px) {
-    margin-top: 15%;
+    margin-top: 25%;
     flex-direction: column;
     .reason {
     margin-left: 10%;
