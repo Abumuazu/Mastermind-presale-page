@@ -1,8 +1,11 @@
 
 .footer{
-margin-top: 10%;
+  margin-top: 10%;
+
 }
+
 .footer-bottom {
+  
   height: 7vh;
 	padding: 10px 70px 10px 70px;
 	background: #010203;
@@ -18,10 +21,23 @@ margin-top: 10%;
   text-decoration: none;
   color: #fff;
 }
+
 @media screen and (max-width: 700px) {
- .footer-bottom{
-  padding: 10px 2px 10px 20px;
- }
+  .footer{
+    margin-top: 25%;
+  }
+
+  .footer-bottom{
+    padding: 10px 2px 10px 20px;
+  }
 }
+
+@media screen and (max-width: 450px) {
+  .footer{
+    margin-top: 50%;
+  }
+
+}
+
 
 

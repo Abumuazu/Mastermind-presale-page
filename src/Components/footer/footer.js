@@ -3,17 +3,18 @@ import "./footer.css"
 import styled from "styled-components";
 
 function footer() {
-    return (
-       
-           <div className="footer">
-           
-{/* <!--   Footer Bottom start  --> */}
-  <div className="footer-bottom">
-   <h4> Copyright &copy; Mastermind 2020.</h4>
-<Button > <a id = "back" href="https://mastermindtoken.com/">Back to Mastermind Page</a> </Button>
+
+  return (
+  <div className="footer">
+          
+    {/* <!--   Footer Bottom start  --> */}
+    <div className="footer-bottom">
+    <h4> Copyright &copy; Mastermind 2020.</h4>
+    <Button > <a id = "back" href="https://mastermindtoken.com/">Back to Mastermind Page</a> </Button>
+    </div>
   </div>
-</div>
-    )
+  );
+  
 }
 
 export default footer

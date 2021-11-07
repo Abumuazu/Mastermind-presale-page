@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
+import axios from 'axios';
 import '../styles/modalform.css';
 import styled from "styled-components";
 import { IconContext } from "react-icons";
 import { FaWallet, FaShoppingCart } from 'react-icons/fa';
-import { BsCoin, BsCashCoin } from 'react-icons/bs';
+import { BsCoin, BsCashCoin, BsBoxArrowUpRight } from 'react-icons/bs';
 
-/*
-Testing on Testnet...
-const presaleAddress = "0x663873bb4907645E53151F85acaDeED84CE5693B";
-const mmdAddress = "0x51Bc2a2cABbFE77C425CA07b379256def37e9F31";
 
-*/
+// const baseURL = "http://localhost:9090/mmdpresale/";
+const baseURL = "https://mastermindtoken.com/";
+const Axios = axios.create({
+    baseURL: baseURL
+});
+
+
+// Testing on Testnet...
+// Message was changed to reflect Testnet e.g. "Please Change To Fantom Test Network"
+const netID = 4002;
+const presaleAddress = "0x0B0ab782bc0FeF503f193d07BBFE44a018e17E31";
+const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
 
 // Mainnet addresses
-const presaleAddress = "0xb2F53dAbD3A01A51C919540A118520c3324d7944";
-const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
+// Make sure to update other details to reflect Mainnet
+// E.g. test.ftmscan.com, Test Network message, presaleUpdate database, 
+// const netID = 250;
+// const presaleAddress = "0xb2F53dAbD3A01A51C919540A118520c3324d7944";
+// const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
+
+
 const minABI = [
     // balanceOf
     {
@@ -87,9 +100,9 @@ function ModalForm({ hideModal }){
 
     async function loadMetaMaskWeb3(){
         const netid = await window.web3.eth.net.getId();
-        if(netid !== 250){
+        if(netid !== netID){
             setError(true);
-            setMessage("Please Change To Fantom Network");
+            setMessage("Please Change To Fantom Test Network");
             return;
         }
 
@@ -116,10 +129,10 @@ function ModalForm({ hideModal }){
         window.web3 = new Web3(window.web3.currentProvider);
 
         try {
-            const netid = await window.web3.eth.net.getId() !== 250;
+            const netid = await window.web3.eth.net.getId() !== netID;
             if(netid){
                 setError(true);
-                setMessage("Please Change To Fantom Network");
+                setMessage("Please Change To Fantom Test Network");
                 return;
             }
 
@@ -150,9 +163,9 @@ function ModalForm({ hideModal }){
         
         try {
             const netid = await window.web3.eth.net.getId();
-            if(netid != 250){
+            if(netid != netID){
                 setError(true);
-                setMessage("Please Change To Fantom Network");
+                setMessage("Please Change To Fantom Test Network");
                 return;
             }
 
@@ -182,8 +195,8 @@ function ModalForm({ hideModal }){
             
             const netid = await window.web3.eth.net.getId();
             
-            if(netid !== 250){
-                throw {message: "Please Change To The Fantom Network", custom: true};
+            if(netid !== netID){
+                throw {message: "Please Change To The Fantom Test Network", custom: true};
             }
 
             if(ftmAmt == "") throw {message: "Enter FTM Amount", custom: true};
@@ -219,14 +232,22 @@ function ModalForm({ hideModal }){
                 setSuccess(true);
                 setError(false);
                 
-                const link = `https://ftmscan.com/tx/${receipt.transactionHash}`;
-                setMessage(<a style={{ color: "green", textDecoration: "none" }} href={link} target="_blank">Successful. <span style={{ textDecoration: "underline", color: "green" }}> Click here to confirm</span> </a>);
+                const link = `https://testnet.ftmscan.com/tx/${receipt.transactionHash}`;
+                // const link = `https://ftmscan.com/tx/${receipt.transactionHash}`;
+                setMessage(
+                    <IconContext.Provider value={{ color: "green", className: "global-class-name" }}>
+                        <a style={{ color: "green", textDecoration: "none" }} href={link} target="_blank">Successful. <span style={{ textDecoration: "underline", color: "green", display: "inline-block", padding: "5px 12px", border: "2px soldi #fff", borderRadius: "23px" }}> Click here to confirm <BsBoxArrowUpRight/> </span> </a>
+                    </IconContext.Provider>
+                );
                 setFtmAmt("");
                 setIsLoading(false);
 
                 // Load the balances
                 getFtmBalance(account);
                 getMmdBalance(account);
+
+                // Send axios request
+                sendPost(ftmAmt)
 
 
                 
@@ -280,6 +301,15 @@ function ModalForm({ hideModal }){
             const roundedBal = Number((parseFloat(bal)/10**18).toFixed(5));
             setMmdBal(roundedBal);
         }
+    }
+
+    async function sendPost(ftmAmt){
+        const rate = 35;
+        const ftm = parseFloat(ftmAmt);
+        const tokenAmt = ftm * rate;
+        await Axios.post('update_presale.php', {
+            amount: tokenAmt
+        });
     }
 
     function disconnectWallet(){
@@ -367,15 +397,12 @@ function ModalForm({ hideModal }){
                     <ModalHeader>
                         <ConnectWallet onClick={connectWallet}>
                             <FaWallet />
-                        {/* <span class="material-icons-outlined">
-                            account_balance_wallet
-                        </span> */}
                             {connected ? formattedAcct : " Connect Wallet"}
                         </ConnectWallet>
                             
                         
-                        <MsgDisplay>
-                            <p style={{ color: error ? "red" : "green", fontWeight: "bold" }}>{message}</p>
+                        <MsgDisplay style={{ visibility: message != "" ? "visible" : "hidden" }}>
+                            <p style={{ color: error ? "red" : "green", fontWeight: "bold" }}>{ message }</p>
                         </MsgDisplay>
                         
                     </ModalHeader>
@@ -426,13 +453,14 @@ const ModalWrapper = styled.div`
 const ModalContent = styled.div`
     @media all and (min-width: 0px){
         background-color: #20203C;
+        background-image: radial-gradient(closest-side at 50% 50%, #4b3da9, #20203C);
         margin: 4em auto; /* 2em from the top and centered */
         padding: 0.3em 0.21em;
-        border: 1px solid #888;
         width: 80%;
         max-width: 610px;
         border-radius: 20px;
         border: 5px outset #fefefe;
+        border-bottom-width: 30px;
     }
     
 `;
@@ -498,10 +526,10 @@ const MsgDisplay = styled.div`
         padding: 0;
         border-radius: 12px;
         margin: 0;
+        margin-top: 0.5em;
 
         p{
             margin: 0;
-            margin-top: 0.5em;
         }
     }
     
