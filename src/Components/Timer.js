@@ -27,7 +27,7 @@ function Timer({ showModal }) {
           <span>
             <h3 style={{color: "#fff"}}>See Proof Below</h3>
           </span>
-          <Button onClick={handleClick}>
+          <Button style={{zIndex:2}}  onClick={handleClick}>
             <h4>Contract Link </h4><img className="arrow" src={Arrow} alt ="arrow" />
           </Button>
      

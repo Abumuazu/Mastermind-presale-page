@@ -82,7 +82,7 @@ function Timer({ showModal }) {
        <h3></h3>
        <h3>Total Token available for sale = 4.5 Million </h3>
        <img className="range" src={Range} alt="range" />
-       <Button onClick={handleClick}>
+       <Button  onClick={handleClick}>
        <h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
        </Button>
        {/* <img className="lock" src= {Image} alt="image"/> */}
@@ -125,7 +125,7 @@ margin-top: 30px;
 .list__paragraph{
     font-weight: 300;
     text-align: center;
- b    margin-top: -2px;
+     margin-top: -2px;
     line-height: 1.2rem;
 }
 `
@@ -191,6 +191,7 @@ const Container = styled.div`
         margin-left: 10%;
         margin-right: 20%;
         animation: slide-in 2000ms;
+        
     }
     .header-text1{
         text-align: center;
@@ -249,8 +250,7 @@ const Container = styled.div`
         margin-top: 55%;
         flex-direction: column;
     
-        .reason {
-        
+        .reason {       
         padding:20px;
         margin: 0px;
     }
@@ -261,7 +261,6 @@ const Container = styled.div`
         margin-left: 5%;
         margin-right:5%;
     width: 70%;
-
     }
     .header-text {
     text-align: center;
@@ -292,11 +291,13 @@ color: white;
 font-weight: bold;
 border: 1px solid #43E8E1;
 margin-top: 25%;
+
 @media screen and (max-width: 700px) {
-    
+
 width: 75%;
 height: 4rem;
 margin: 0 auto;
+
 
 }
 ` 
