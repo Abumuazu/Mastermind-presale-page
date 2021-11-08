@@ -18,16 +18,16 @@ const Axios = axios.create({
 
 // Testing on Testnet...
 // Message was changed to reflect Testnet e.g. "Please Change To Fantom Test Network"
-const netID = 4002;
-const presaleAddress = "0x0B0ab782bc0FeF503f193d07BBFE44a018e17E31";
-const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
+// const netID = 4002;
+// const presaleAddress = "0x0B0ab782bc0FeF503f193d07BBFE44a018e17E31";
+// const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
 
 // Mainnet addresses
 // Make sure to update other details to reflect Mainnet
 // E.g. test.ftmscan.com, Test Network message, presaleUpdate database, 
-// const netID = 250;
-// const presaleAddress = "0xb2F53dAbD3A01A51C919540A118520c3324d7944";
-// const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
+const netID = 250;
+const presaleAddress = "0xb2F53dAbD3A01A51C919540A118520c3324d7944";
+const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
 
 
 const minABI = [
@@ -101,9 +101,45 @@ function ModalForm({ hideModal }){
     async function loadMetaMaskWeb3(){
         const netid = await window.web3.eth.net.getId();
         if(netid !== netID){
-            setError(true);
-            setMessage("Please Change To Fantom Test Network");
-            return;
+            if(isMetaMask){
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0xFA' }],
+                    });
+                } catch (switchError) {
+                    console.log(switchError);
+                    if(switchError.code === 4902){
+                        
+                        try {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [
+                                    {
+                                        chainId: '0xFA',
+                                        chainName: 'Fantom Opera',
+                                        rpcUrls: ['https://rpc.ftm.tools/'],
+                                        nativeCurrency: {
+                                            name: 'Fantom',
+                                            symbol: 'FTM',
+                                            decimals: 18,
+                                            blockExplorerUrls: ['https://ftmscan.com/'],
+                                        },
+                                    }
+                                ],
+                            });
+                        } catch (addError) {
+                            // handle "add" error
+                            console.log("Add Error: ", addError);
+                        }
+                    }
+                }
+
+            }else{
+                setError(true);
+                setMessage("Please Change To Fantom Network");
+                return;
+            }
         }
 
         try {
@@ -129,10 +165,10 @@ function ModalForm({ hideModal }){
         window.web3 = new Web3(window.web3.currentProvider);
 
         try {
-            const netid = await window.web3.eth.net.getId() !== netID;
-            if(netid){
+            const isSameID = await window.web3.eth.net.getId() !== netID;
+            if(isSameID){
                 setError(true);
-                setMessage("Please Change To Fantom Test Network");
+                setMessage("Please Change To Fantom Network");
                 return;
             }
 
@@ -164,9 +200,47 @@ function ModalForm({ hideModal }){
         try {
             const netid = await window.web3.eth.net.getId();
             if(netid != netID){
-                setError(true);
-                setMessage("Please Change To Fantom Test Network");
-                return;
+
+                if(isMetaMask){
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0xFA' }],
+                        });
+                    } catch (switchError) {
+                        console.log(switchError);
+                        if(switchError.code === 4902){
+                            console.log("On add chain");
+                            try {
+                                await window.ethereum.request({
+                                    method: 'wallet_addEthereumChain',
+                                    params: [
+                                        {
+                                            chainId: '0xFA',
+                                            chainName: 'Fantom Opera',
+                                            rpcUrls: ['https://rpc.ftm.tools/'],
+                                            nativeCurrency: {
+                                                name: 'Fantom Opera',
+                                                symbol: 'FTM',
+                                                decimals: 18,
+                                                blockExplorerUrls: ['https://ftmscan.com/']
+                                            },
+                                        }
+                                    ],
+                                });
+                            } catch (addError) {
+                                // handle "add" error
+                                console.log("Add Error", addError);
+                            }
+                        }
+                    }
+    
+                }else{
+                    setError(true);
+                    setMessage("Please Change To Fantom Network");
+                    return;
+                }
+
             }
 
 
@@ -196,7 +270,8 @@ function ModalForm({ hideModal }){
             const netid = await window.web3.eth.net.getId();
             
             if(netid !== netID){
-                throw {message: "Please Change To The Fantom Test Network", custom: true};
+                
+                throw {message: "Please Change To The Fantom Network", custom: true};
             }
 
             if(ftmAmt == "") throw {message: "Enter FTM Amount", custom: true};
@@ -232,8 +307,8 @@ function ModalForm({ hideModal }){
                 setSuccess(true);
                 setError(false);
                 
-                const link = `https://testnet.ftmscan.com/tx/${receipt.transactionHash}`;
-                // const link = `https://ftmscan.com/tx/${receipt.transactionHash}`;
+                // const link = `https://testnet.ftmscan.com/tx/${receipt.transactionHash}`;
+                const link = `https://ftmscan.com/tx/${receipt.transactionHash}`;
                 setMessage(
                     <IconContext.Provider value={{ color: "green", className: "global-class-name" }}>
                         <a style={{ color: "green", textDecoration: "none" }} href={link} target="_blank">Successful. <span style={{ textDecoration: "underline", color: "green", display: "inline-block", padding: "5px 12px", border: "2px soldi #fff", borderRadius: "23px" }}> Click here to confirm <BsBoxArrowUpRight/> </span> </a>
