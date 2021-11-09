@@ -84,9 +84,9 @@ function Carousels() {
             captionPosition="bottom"
             automatic={true}
             dots={true}
-            pauseIconColor="white"
+            pauseIconColor="black"
             pauseIconSize="40px"
-            slideBackgroundColor="white"
+            slideBackgroundColor="transparent"
             slideImageFit="contain"
             thumbnails={true}
             thumbnailWidth="100px"

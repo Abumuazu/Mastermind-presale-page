@@ -44,7 +44,7 @@ export default class Countdown extends React.Component {
 					{days && (
 						<div className='countdown-item'>
 							<SVGCircle radius={daysRadius} />
-							{days} 
+							0
 							<span>days</span>
 						</div>
 					)}

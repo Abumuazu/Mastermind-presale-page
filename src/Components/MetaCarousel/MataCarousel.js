@@ -5,7 +5,8 @@ import Image3 from "./MetaImages/step3.png"
 import Image4 from "./MetaImages/step4.png"
 import Image5 from "./MetaImages/step5.png"
 import Image6 from "./MetaImages/step6.png"
-import Image2B from "./MetaImages/step2B.png"
+import Image7 from "./MetaImages/step7.png"
+import Image8 from "./MetaImages/step8.png"
 import styled from "styled-components"
 
 function MetaCarousels() {
@@ -21,25 +22,30 @@ function MetaCarousels() {
       caption: "Step2"
     },
     {
-        image: Image2B,
+        image: Image3,
         caption: "Step3"
       },
     {
-        image:Image3,
+        image:Image4,
         caption: "Step4"
       },
     {
-      image: Image4,
+      image: Image5,
       caption: "Step5"
     },
     {
-      image: Image5,
+      image: Image6,
       caption: "Step6"
     },
     {
-      image: Image6,
+      image: Image7,
       caption: "Step7"
+    },
+    {
+      image: Image8,
+      caption: "Step8"
     }
+
   ];
 
   const captionStyle = {
@@ -70,9 +76,9 @@ function MetaCarousels() {
             captionPosition="bottom"
             automatic={true}
             dots={true}
-            pauseIconColor="white"
+            pauseIconColor="#43E8E1"
             pauseIconSize="40px"
-            slideBackgroundColor="white"
+            slideBackgroundColor="transparent"
             slideImageFit="contain"
             thumbnails={true}
             thumbnailWidth="100px"

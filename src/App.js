@@ -64,7 +64,7 @@ function handleTrust() {
   :
   ""
 }
-<CountDown timeTillDate="11 10 2021, 9:00 am" timeFormat="MM DD YYYY, h:mm a" />
+<CountDown timeTillDate="11 10 2021, 10:00 am" timeFormat="MM DD YYYY, h:mm a" />
 <Timer showModal={showContractModal} />
 {
   showContract
@@ -97,7 +97,7 @@ export default App;
 
 const HowToBtns = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     width: 100vw;
     @media screen and (max-width: 700px) {

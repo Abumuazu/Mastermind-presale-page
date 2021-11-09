@@ -290,6 +290,7 @@ const Container = styled.div`
         font-size: 14px;
         font-weight: normal;
         line-height: 15px;
+        margin-top: 8.2%;
     }
     .box:before {
         content: "";
