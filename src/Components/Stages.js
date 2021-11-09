@@ -55,8 +55,8 @@ function Timer({ showModal }) {
                                         name: 'Fantom',
                                         symbol: 'FTM',
                                         decimals: 18,
-                                        blockExplorerUrls: ['https://ftmscan.com/'],
                                     },
+                                    blockExplorerUrls: ['https://ftmscan.com/']
                                 }
                             ],
                         });
@@ -64,6 +64,32 @@ function Timer({ showModal }) {
                         // handle "add" error
                         console.log("Add Error: ", addError);
                     }
+                }
+                if(switchError.code === -32603){
+                    try {
+                        await MMProvider.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [
+                                {
+                                    chainId: '0xFA',
+                                    chainName: 'Fantom Opera',
+                                    rpcUrls: ['https://rpc.ftm.tools/'],
+                                    nativeCurrency: {
+                                        name: 'Fantom',
+                                        symbol: 'FTM',
+                                        decimals: 18,
+                                    },
+                                    blockExplorerUrls: ['https://ftmscan.com/']
+                                }
+                            ]
+                        });
+
+                        
+                    } catch (addError) {
+                        // handle "add" error
+                        console.log("Add Error: ", addError);
+                    }
+                
                 }
             }
 

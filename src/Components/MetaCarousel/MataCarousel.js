@@ -98,9 +98,8 @@ function MetaCarousels() {
 
 export default MetaCarousels;
 
-const Container = styled.div   `
-@media screen and (max-width: 700px) {
-    margin: -40% 0 -40% 0;
-}
-
+const Container = styled.div`
+  @media screen and (max-width: 700px) {
+      margin: -40% 0 -40% 0;
+  }
 `

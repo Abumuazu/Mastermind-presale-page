@@ -99,7 +99,8 @@ const HowToBtns = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 100vw;
+    width: 60vw;
+    margin: 0 auto;
     @media screen and (max-width: 700px) {
       flex-direction: column;
     }
