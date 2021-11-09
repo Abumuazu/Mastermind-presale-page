@@ -5,7 +5,7 @@ import Image3 from "./MetaImages/step3.png"
 import Image4 from "./MetaImages/step4.png"
 import Image5 from "./MetaImages/step5.png"
 import Image6 from "./MetaImages/step6.png"
-
+import Image2B from "./MetaImages/step2B.png"
 
 function MetaCarousels() {
  const data = [
@@ -20,20 +20,24 @@ function MetaCarousels() {
       caption: "Step2"
     },
     {
+        image: Image2B,
+        caption: "Step3"
+      },
+    {
         image:Image3,
         caption: "Step4"
       },
     {
       image: Image4,
-      caption: "Step3"
-    },
-    {
-      image: Image5,
       caption: "Step5"
     },
     {
-      image: Image6,
+      image: Image5,
       caption: "Step6"
+    },
+    {
+      image: Image6,
+      caption: "Step7"
     }
   ];
 
