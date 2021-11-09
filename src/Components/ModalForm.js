@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
+import detectEthereumProvider from '@metamask/detect-provider';
 import axios from 'axios';
 import '../styles/modalform.css';
 import styled from "styled-components";
@@ -18,16 +19,16 @@ const Axios = axios.create({
 
 // Testing on Testnet...
 // Message was changed to reflect Testnet e.g. "Please Change To Fantom Test Network"
-const netID = 4002;
-const presaleAddress = "0x0B0ab782bc0FeF503f193d07BBFE44a018e17E31";
-const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
+// const netID = 4002;
+// const presaleAddress = "0x0B0ab782bc0FeF503f193d07BBFE44a018e17E31";
+// const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
 
 // Mainnet addresses
 // Make sure to update other details to reflect Mainnet
 // E.g. test.ftmscan.com, Test Network message, presaleUpdate database, 
-// const netID = 250;
-// const presaleAddress = "0xb2F53dAbD3A01A51C919540A118520c3324d7944";
-// const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
+const netID = 250;
+const presaleAddress = "0xb2F53dAbD3A01A51C919540A118520c3324d7944";
+const mmdAddress = "0x32a0880eecb08fe62D3De1cF557B4077e8AB7c6F";
 
 
 const minABI = [
@@ -64,6 +65,7 @@ function ModalForm({ hideModal }){
     const [formattedAcct, setFormattedAcct] = useState("");
     const [connected, setConnected] = useState(false);
     const [isMetaMask, setIsMetaMask] = useState(false);
+    const [MMProvider, setMMProvider] = useState({});
     const [web3Installed, setWeb3Installed] = useState(false);
     const [ftmBal, setFtmBal] = useState(0);
     const [mmdBal, setMmdBal] = useState(0);
@@ -101,14 +103,115 @@ function ModalForm({ hideModal }){
     async function loadMetaMaskWeb3(){
         const netid = await window.web3.eth.net.getId();
         if(netid !== netID){
-            setError(true);
-            setMessage("Please Change To Fantom Test Network");
-            return;
+            if(isMetaMask){
+                try {
+                    const isSwitched = await MMProvider.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0xFA' }],
+                    });
+
+                    // console.log("isSwitched: ", isSwitched);
+
+                    if(isSwitched !== null){
+                        // throw {message: "Network Switch Error", custom: true};
+                        throw {message: "isSwitched is not null", custom: true};
+                    }
+                } catch (switchError) {
+                    console.log(switchError);
+                    if(switchError.code === -32603){
+                        try {
+                            const isAdded = await MMProvider.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [
+                                    {
+                                        chainId: '0xFA',
+                                        chainName: 'Fantom Opera',
+                                        rpcUrls: ['https://rpc.ftm.tools/'],
+                                        nativeCurrency: {
+                                            name: 'Fantom',
+                                            symbol: 'FTM',
+                                            decimals: 18,
+                                        },
+                                        blockExplorerUrls: ['https://ftmscan.com/']
+                                    }
+                                ]
+                            });
+
+                            if(isAdded !== null){
+                                throw {message: "Network Add Error", custom: true};
+                            }
+                        } catch (addError) {
+                            // handle "add" error
+                            if(addError.code === 4001){
+                                setError(true);
+                                setMessage("Network Add Rejected");
+                            
+                            }else{
+                                setError(true);
+                                setMessage("Network Add Error");
+                            }
+                            return;
+                        }
+                    
+                    }else if(switchError.code === 4902){
+                        
+                        try {
+                            const isAdded = await MMProvider.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [
+                                    {
+                                        chainId: '0xFA',
+                                        chainName: 'Fantom Opera',
+                                        rpcUrls: ['https://rpc.ftm.tools/'],
+                                        nativeCurrency: {
+                                            name: 'Fantom',
+                                            symbol: 'FTM',
+                                            decimals: 18,
+                                        },
+                                        blockExplorerUrls: ['https://ftmscan.com/']
+                                    }
+                                ]
+                            });
+
+                            if(isAdded !== null){
+                                throw {message: "Network Add Error", custom: true};
+                            }
+                        } catch (addError) {
+                            // handle "add" error
+                            if(addError.code === 4001){
+                                setError(true);
+                                setMessage("Network Add Rejected");
+                            
+                            }else{
+                                setError(true);
+                                setMessage("Network Add Error");
+                            }
+                            return;
+                        }
+                    
+                    }else if(switchError.custom){
+                        // Show custom error
+                        setError(true);
+                        setMessage(switchError.message);
+                        return;
+                    }else{
+                        // Show error
+                        setError(true);
+                        setMessage("Please Change To Fantom Network");
+                        return;
+                    }
+                }
+
+            }else{
+                setError(true);
+                setMessage("Please Change To Fantom Network");
+                return;
+            }
         }
 
         try {
             if(account == ""){
-               const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+               const accounts = await MMProvider.request({ method: 'eth_requestAccounts' });
                setAccount(accounts[0]);
                formatWallet(accounts[0]);
                getFtmBalance(accounts[0]);
@@ -129,10 +232,10 @@ function ModalForm({ hideModal }){
         window.web3 = new Web3(window.web3.currentProvider);
 
         try {
-            const netid = await window.web3.eth.net.getId() !== netID;
-            if(netid){
+            const isSameID = await window.web3.eth.net.getId() !== netID;
+            if(isSameID){
                 setError(true);
-                setMessage("Please Change To Fantom Test Network");
+                setMessage("Please Change To Fantom Network");
                 return;
             }
 
@@ -164,9 +267,60 @@ function ModalForm({ hideModal }){
         try {
             const netid = await window.web3.eth.net.getId();
             if(netid != netID){
-                setError(true);
-                setMessage("Please Change To Fantom Test Network");
-                return;
+
+                if(isMetaMask){
+                    try {
+                        const isSwitched = await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0xFA' }],
+                        });
+
+                        if(isSwitched !== null){
+                            throw {message: "Network Switch Error", custom: true}
+                        }
+                    } catch (switchError) {
+                        console.log(switchError);
+                        if(switchError.code === 4902){
+                            try {
+                                const isAdded = await window.ethereum.request({
+                                    method: 'wallet_addEthereumChain',
+                                    params: [
+                                        {
+                                            chainId: '0xFA',
+                                            chainName: 'Fantom Opera',
+                                            rpcUrls: ['https://rpc.ftm.tools/'],
+                                            nativeCurrency: {
+                                                name: 'Fantom Opera',
+                                                symbol: 'FTM',
+                                                decimals: 18,
+                                                blockExplorerUrls: ['https://ftmscan.com/']
+                                            },
+                                        }
+                                    ],
+                                });
+                                console.log("isAdded: ", isAdded);
+
+                                if(isAdded !== null){
+                                    throw {message: "Network add error", custom: true}
+                                }
+                            } catch (addError) {
+                                if(addError.custom){
+                                    setError(true);
+                                    setMessage(addError.message);
+                                }else{
+                                    // handle "add" error
+                                    console.log("Add Error", addError);
+                                }
+                            }
+                        }
+                    }
+    
+                }else{
+                    setError(true);
+                    setMessage("Please Change To Fantom Network");
+                    return;
+                }
+
             }
 
 
@@ -196,7 +350,8 @@ function ModalForm({ hideModal }){
             const netid = await window.web3.eth.net.getId();
             
             if(netid !== netID){
-                throw {message: "Please Change To The Fantom Test Network", custom: true};
+                
+                throw {message: "Please Change To The Fantom Network", custom: true};
             }
 
             if(ftmAmt == "") throw {message: "Enter FTM Amount", custom: true};
@@ -206,34 +361,35 @@ function ModalForm({ hideModal }){
             if(ftmAmt <= 0) throw {message: "FTM Amount Must Be Greater Than Zero", custom: true};
             
             setIsLoading(true);
-            // const gasPrice = await window.web3.eth.getGasPrice();
-            const receipt = await window.web3.eth.sendTransaction({
+            const gasPrice = await window.web3.eth.getGasPrice();
+            // const gas = "0xC350";
+            
+            const txParameters = {
                 from: account,
                 to: presaleAddress,
                 value: window.web3.utils.toWei(ftmAmt, 'ether'),
-                gas: 500000
-            });
+                gasPrice: gasPrice
+            };
 
-            //
+            const data = await window.web3.eth.sendTransaction(txParameters);
+            const txHash = data.transactionHash;
+                
             const expectedBlockTime = 1000;
             const sleep = (milliseconds) => {
                 return new Promise(resolve => setTimeout(resolve, milliseconds))
-            }
-
+            };
             let transactionReceipt = null
-            while (transactionReceipt == null) { // Waiting expectedBlockTime until the transaction is mined
-                transactionReceipt = await window.web3.eth.getTransactionReceipt(receipt.transactionHash);
+            
+            while (transactionReceipt == null) {
+                transactionReceipt = await window.web3.eth.getTransactionReceipt(txHash);
                 await sleep(expectedBlockTime)
             }
-
-            //
 
             if(transactionReceipt.status == '0x01'){
                 setSuccess(true);
                 setError(false);
                 
-                const link = `https://testnet.ftmscan.com/tx/${receipt.transactionHash}`;
-                // const link = `https://ftmscan.com/tx/${receipt.transactionHash}`;
+                const link = `https://ftmscan.com/tx/${transactionReceipt.transactionHash}`;
                 setMessage(
                     <IconContext.Provider value={{ color: "green", className: "global-class-name" }}>
                         <a style={{ color: "green", textDecoration: "none" }} href={link} target="_blank">Successful. <span style={{ textDecoration: "underline", color: "green", display: "inline-block", padding: "5px 12px", border: "2px soldi #fff", borderRadius: "23px" }}> Click here to confirm <BsBoxArrowUpRight/> </span> </a>
@@ -273,7 +429,9 @@ function ModalForm({ hideModal }){
             }else if(error.code == 4001){
                 setMessage("Transaction Signing Rejected");
             }else{
-                setMessage("Transaction Failed");
+                const msg = "Code: " + error.code + ", Msg: " + error.message;
+                // setMessage("Transaction Failed");
+                setMessage(msg);
             }
             setIsLoading(false);
 
@@ -327,7 +485,9 @@ function ModalForm({ hideModal }){
 
     
     useEffect(async () => {
-        if(window.ethereum){
+        const MetaMProvider = await detectEthereumProvider();
+        if(MetaMProvider === window.ethereum){
+            setMMProvider(MetaMProvider);
             setWeb3Installed(true);
             setIsMetaMask(true);
             window.web3 = new Web3(window.ethereum);
@@ -335,7 +495,6 @@ function ModalForm({ hideModal }){
             setWeb3Installed(true);
             window.web3 = new Web3(window.web3.currentProvider);
         }else{
-
         }
 
     }, []);
