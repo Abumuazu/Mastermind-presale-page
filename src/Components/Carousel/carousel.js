@@ -9,6 +9,8 @@ import Image7 from "../Carousel/CarouselImages/step7.png"
 import Image8 from "../Carousel/CarouselImages/step8.png"
 import Image9 from "../Carousel/CarouselImages/step9.png"
 import Image10 from "../Carousel/CarouselImages/step10.png"
+import styled from "styled-components"
+
 
 function Carousels() {
  const data = [
@@ -65,7 +67,7 @@ function Carousels() {
     fontWeight: 'bold',
   }
   return (
-    <div  className="App">
+    <Container  className="App">
       <div style={{ textAlign: "center" }}>
         <h2></h2>
         <p></p>
@@ -100,8 +102,14 @@ function Carousels() {
           />
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  @media screen and (max-width: 700px) {
+    margin: -40% 0 -40% 0;
+  }
+`;
 
 export default Carousels;
