@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import Web3 from 'web3';
 import "../styles/reason.css"
@@ -11,8 +11,21 @@ import Image from "../Images/287877.png";
 
 function Timer({ showModal }) {
 
+    const [showMetaMask, setShowMetaMask] = useState(true);
+    const [showTrust, setShowTrust] = useState(false);
+
     function handleClick(){
         showModal(true);
+    }
+
+    function handleMetaMask(){
+        setShowMetaMask(true);
+        setShowTrust(false);
+    }
+
+    function handleTrust(){
+        setShowMetaMask(false);
+        setShowTrust(true);
     }
 
     async function addSwitchNet(){
@@ -60,74 +73,130 @@ function Timer({ showModal }) {
 
     return (
        <Container className= "Timer">
-       <div className="reason"> 
-       <h4 className= "header-text">  How To Buy</h4>
+        <div className="reason"> 
+            <h4 className= "header-text">  How To Buy</h4>
 
-       <div className="reason-box1">
+            <HowToBtns>
+                <MetaMask style={{ color: showMetaMask ? '#343434' : '#ffffff', backgroundColor: showMetaMask ? '#4dffff' : 'transparent' }} onClick={handleMetaMask}>On MetaMask</MetaMask>
+                <TrustWallet style={{ color: showTrust ? '#343434' : '#ffffff', backgroundColor: showTrust ? '#4dffff' : 'transparent' }} onClick={handleTrust}>On Trust Wallet</TrustWallet>
+            </HowToBtns>
 
-       <List className="list">
-           <div className="list__number">
-               1
-           </div>
-           <h5 className= "list___header"> Create a MetaMask wallet </h5>
-           <h5 className="list__paragraph">Download the MetaMask app from IOS/Google playstore. Create a wallet after downloading the MetaMask app.</h5>
-          
-      </List>
-      <Border />
-      <List className="list">
-           <div className="list__number">
-               2
-           </div>
-           <h5 className= "list___header">Add or Switch to Fantom Opera Mainnet</h5>
-           <h5 className="list__paragraph">Click <AddFTMNetBtn onClick={addSwitchNet}>here</AddFTMNetBtn> to automatically add or switch to the Fantom Mainnet.</h5>          
-      </List>
-      <Border />
-      <List className="list">
-           <div className="list__number">
-               3
-           </div>
-           <h5 className= "list___header">Send Fantom to your wallet</h5>
-           <h5 className="list__paragraph"> You can buy Fantom (FTM) and transfer it to your MetaMask Wallet from exchanges like, Binance, Okexx and Huobi etc. Make sure to use the FTM - Fantom network when transfering FTM.</h5>
-          
-      </List>
-      <Border />
-      <List className="list">
-           <div className="list__number">
-               4
-           </div>
-           <h5 className= "list___header"> Connect to the presale smart contract </h5>
-           <h5 className="list__paragraph"> Click on buy icon to on the presale page to connect to the presale smart contract.</h5>
-          
-      </List>
-      <Border />
-      <List className="list">
-           <div className="list__number">
-               5
-           </div>
-           <h5 className= "list___header">Swap FTM for MMD</h5>
-           <h5 className="list__paragraph"> You can swap as soon as you have FTM available! There is a maximum individual cap of 1000 FTM and no minimum cap.</h5>
-          
-      </List>
-      <Border />
+            {/* MetaMask */}
+            <div style={{ display: showMetaMask ? 'block' : 'none' }} className="reason-box1">
 
-       </div>
+                <List className="list">
+                <div className="list__number">
+                    1
+                </div>
+                <h5 className= "list___header"> Create a MetaMask wallet </h5>
+                <h5 className="list__paragraph">Download the MetaMask app from IOS/Google playstore. Create a wallet after downloading the MetaMask app.</h5>
+                
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    2
+                </div>
+                <h5 className= "list___header">Add or Switch to Fantom Opera Mainnet</h5>
+                <h5 className="list__paragraph">Visit this page on your MetaMask DApp browser. Click <AddFTMNetBtn onClick={addSwitchNet}>here</AddFTMNetBtn> to automatically add or switch to the Fantom Mainnet.</h5>          
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    3
+                </div>
+                <h5 className= "list___header">Send Fantom to your wallet</h5>
+                <h5 className="list__paragraph"> You can buy Fantom (FTM) and transfer it to your MetaMask Wallet from exchanges like, Binance, Okexx and Huobi etc. Make sure to use the FTM - Fantom network when transfering FTM.</h5>
+                
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    4
+                </div>
+                <h5 className= "list___header"> Connect to the presale smart contract </h5>
+                <h5 className="list__paragraph"> Visit the presale page on your MetaMask wallet DApp browser. Click on the "Buy Tokens" button on the presale page to open buy modal.</h5>
+                
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    5
+                </div>
+                <h5 className= "list___header">Swap FTM for MMD</h5>
+                <h5 className="list__paragraph"> You can swap as soon as you have FTM available! There is a maximum individual cap of 1000 FTM and no minimum cap.</h5>
+                
+                </List>
+                <Border />
 
+            </div>
+            
+            {/* Trust Wallet */}
+            <div style={{ display: showTrust ? 'block' : 'none' }} className="reason-box1">
 
-       </div>
+                <List className="list">
+                <div className="list__number">
+                    1
+                </div>
+                <h5 className= "list___header"> Create a Trust wallet </h5>
+                <h5 className="list__paragraph">Download the Trust wallet app from IOS/Google playstore. Create a wallet after downloading the Trust wallet app. <Note>Note: IOS users are advised to use MetaMask or Safepal instead of Trust wallet.</Note></h5>
+                
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    2
+                </div>
+                <h5 className= "list___header">Switch to Fantom Opera Mainnet</h5>
+                <h5 className="list__paragraph">Switch to the Fantom Mainnet.</h5>          
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    3
+                </div>
+                <h5 className= "list___header">Send Fantom to your wallet</h5>
+                <h5 className="list__paragraph"> You can buy Fantom (FTM) and transfer it to your Trust wallet from exchanges like, Binance, Okexx and Huobi etc. Make sure to use the FTM - Fantom network when transfering FTM.</h5>
+                
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    4
+                </div>
+                <h5 className= "list___header"> Connect to the presale smart contract </h5>
+                <h5 className="list__paragraph">Visit the presale page on your Trust wallet DApp browser. Click on the "Buy Tokens" button on the presale page to open buy modal.</h5>
+                
+                </List>
+                <Border />
+                <List className="list">
+                <div className="list__number">
+                    5
+                </div>
+                <h5 className= "list___header">Swap FTM for MMD</h5>
+                <h5 className="list__paragraph">Click on the "Connect Wallet" button to connect your wallet, and buy MMD token with any mount of FTM. You can swap as soon as you have FTM available! There is a maximum individual cap of 1000 FTM and no minimum cap.</h5>
+                
+                </List>
+                <Border />
 
-       <div className="box">
+            </div>
+            
+
+        </div>
+
+        <div className="box">
       
-       <BorderBottom>
-           <h3> 1 FTM= 34 MMD</h3>
-       </BorderBottom>
-       <h3></h3>
-       <h3>Total Token available for sale = 4.5 Million </h3>
-       <img className="range" src={Range} alt="range" />
-       <Button  onClick={handleClick}>
-       <h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
-       </Button>
-       {/* <img className="lock" src= {Image} alt="image"/> */}
-       </div>
+            <BorderBottom>
+                <h3> 1 FTM= 34 MMD</h3>
+            </BorderBottom>
+            <h3></h3>
+            <h3>Total Token available for sale = 4.5 Million </h3>
+            <img className="range" src={Range} alt="range" />
+            <Button  onClick={handleClick}>
+                <h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
+            </Button>
+            {/* <img className="lock" src= {Image} alt="image"/> */}
+        </div>
 
        </Container>
     )
@@ -343,12 +412,35 @@ margin-top: 25%;
 
 @media screen and (max-width: 700px) {
 
-width: 75%;
-height: 4rem;
-margin: 0 auto;
+    width: 75%;
+    height: 4rem;
+    margin: 0 auto;
 
 
 }
 ` 
+const HowToBtns = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+`;
+const MetaMask = styled.button`
+    border: 1px solid #4dffff;
+    border-radius: 20px;
+    color: white;
+    padding: 9px 12px;
+    font-weight: bold;
+`;
 
+const TrustWallet = styled.button`
+    border-radius: 20px;
+    border: 1px solid #4dffff;
+    color: white;
+    padding: 9px 12px;
+    font-weight: bold;
+`;
 
+const Note = styled.p`
+    color: yellow;
+    margin: 0;
+`;
