@@ -197,7 +197,9 @@ function ModalForm({ hideModal }){
                     }else{
                         // Show error
                         setError(true);
+                        // const msg = 'Code: ' + switchError.code + ', Msg: ' + switchError.message;
                         setMessage("Please Change To Fantom Network");
+                        // setMessage(msg);
                         return;
                     }
                 }
@@ -368,7 +370,8 @@ function ModalForm({ hideModal }){
                 from: account,
                 to: presaleAddress,
                 value: window.web3.utils.toWei(ftmAmt, 'ether'),
-                gasPrice: gasPrice
+                gasPrice: gasPrice,
+                gas: 200000
             };
 
             const data = await window.web3.eth.sendTransaction(txParameters);

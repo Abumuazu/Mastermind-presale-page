@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import Web3 from 'web3';
+import detectEthereumProvider from '@metamask/detect-provider';
 import "../styles/reason.css"
 import icon1 from "../Assests/icon1.svg"
 import icon2 from "../Assests/icon2.svg"
@@ -13,6 +14,10 @@ function Timer({ showModal }) {
 
     const [showMetaMask, setShowMetaMask] = useState(true);
     const [showTrust, setShowTrust] = useState(false);
+    const [MMProvider, setMMProvider] = useState({});
+    const [web3Installed, setWeb3Installed] = useState(false);
+    const [isMetaMask, setIsMetaMask] = useState(false);
+
 
     function handleClick(){
         showModal(true);
@@ -30,18 +35,16 @@ function Timer({ showModal }) {
 
     async function addSwitchNet(){
         if(window.ethereum){
-            console.log("On addSwitch...");
             try {
-                await window.ethereum.request({
+                await MMProvider.request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: '0xFA' }],
                 });
             } catch (switchError) {
-                console.log(switchError);
                 if(switchError.code === 4902){
                     
                     try {
-                        await window.ethereum.request({
+                        await MMProvider.request({
                             method: 'wallet_addEthereumChain',
                             params: [
                                 {
@@ -71,6 +74,21 @@ function Timer({ showModal }) {
         }
     }
 
+    useEffect(async () => {
+        const MetaMProvider = await detectEthereumProvider();
+        if(MetaMProvider === window.ethereum){
+            setMMProvider(MetaMProvider);
+            setWeb3Installed(true);
+            setIsMetaMask(true);
+            window.web3 = new Web3(window.ethereum);
+        }else if(window.web3){
+            setWeb3Installed(true);
+            window.web3 = new Web3(window.web3.currentProvider);
+        }else{
+        }
+
+    }, []);
+
     return (
        <Container className= "Timer">
         <div className="reason"> 
@@ -89,7 +107,7 @@ function Timer({ showModal }) {
                     1
                 </div>
                 <h5 className= "list___header"> Create a MetaMask wallet </h5>
-                <h5 className="list__paragraph">Download the MetaMask app from IOS/Google playstore. Create a wallet after downloading the MetaMask app.</h5>
+                <h5 className="list__paragraph">Download (or update if already installed) the MetaMask app from IOS/Google playstore. Create a wallet after downloading the MetaMask app.</h5>
                 
                 </List>
                 <Border />
@@ -139,7 +157,7 @@ function Timer({ showModal }) {
                     1
                 </div>
                 <h5 className= "list___header"> Create a Trust wallet </h5>
-                <h5 className="list__paragraph">Download the Trust wallet app from IOS/Google playstore. Create a wallet after downloading the Trust wallet app. <Note>Note: IOS users are advised to use MetaMask or Safepal instead of Trust wallet.</Note></h5>
+                <h5 className="list__paragraph">Download (or update if already installed) the Trust wallet app from IOS/Google playstore. Create a wallet after downloading the Trust wallet app. <Note>Note: IOS users are advised to use MetaMask or Safepal instead of Trust wallet.</Note></h5>
                 
                 </List>
                 <Border />
