@@ -1,16 +1,13 @@
 import { Carousel } from 'react-carousel-minimal';
-import Image1 from "../Carousel/CarouselImages/step1.png"
-import Image2 from "../Carousel/CarouselImages/step2.png"
-import Image11 from "../Carousel/CarouselImages/step11.png"
-import Image4 from "../Carousel/CarouselImages/step4.png"
-import Image5 from "../Carousel/CarouselImages/step5.png"
-import Image6 from "../Carousel/CarouselImages/step6.png"
-import Image7 from "../Carousel/CarouselImages/step7.png"
-import Image8 from "../Carousel/CarouselImages/step8.png"
-import Image9 from "../Carousel/CarouselImages/step9.png"
-import Image10 from "../Carousel/CarouselImages/step10.png"
+import Image1 from "./MetaImages/step1.png"
+import Image2 from "./MetaImages/step2.png"
+import Image3 from "./MetaImages/step3.png"
+import Image4 from "./MetaImages/step4.png"
+import Image5 from "./MetaImages/step5.png"
+import Image6 from "./MetaImages/step6.png"
 
-function Carousels() {
+
+function MetaCarousels() {
  const data = [
     {
       image: Image1,
@@ -23,7 +20,7 @@ function Carousels() {
       caption: "Step2"
     },
     {
-        image:Image11,
+        image:Image3,
         caption: "Step4"
       },
     {
@@ -37,23 +34,7 @@ function Carousels() {
     {
       image: Image6,
       caption: "Step6"
-    },
-    {
-        image: Image7,
-        caption: "Step7"
-      },
-      {
-        image: Image8,
-        caption: "Step8"
-      },
-      {
-        image: Image9,
-        caption: "Step9"
-      },
-      {
-        image: Image10,
-        caption: "Step10"
-      }
+    }
   ];
 
   const captionStyle = {
@@ -65,8 +46,8 @@ function Carousels() {
     fontWeight: 'bold',
   }
   return (
-    <div  className="App">
-      <div style={{ textAlign: "center" }}>
+    <div >
+      <div style={{ textAlign: "center"  }}  >
         <h2></h2>
         <p></p>
         <div style={{
@@ -104,4 +85,4 @@ function Carousels() {
   );
 }
 
-export default Carousels;
+export default MetaCarousels;

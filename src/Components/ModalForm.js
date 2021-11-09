@@ -266,7 +266,7 @@ function ModalForm({ hideModal }){
         
         try {
             const netid = await window.web3.eth.net.getId();
-            if(netid != netID){
+            if(netid !== netID){
 
                 if(isMetaMask){
                     try {
