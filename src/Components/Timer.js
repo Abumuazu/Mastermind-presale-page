@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
 import "../styles/reason.css";
-import icon1 from "../Assests/icon1.svg";
-import icon2 from "../Assests/icon2.svg";
-import icon3 from "../Assests/icon3.svg";
-import Range from "../Assests/range.svg";
 import Arrow from '../Assests/arrow.svg';
 import Image from "../Images/2878777.png";
 import PresaleUpdate from './PresaleUpdate';
@@ -34,7 +30,7 @@ function Timer({ showModal }) {
         </div>
         <div className="box two">
        
-          <img className="lock" src= {Image} alt="image"/>
+          <img className="lock" src= {Image} alt="lock"/>
         </div>
 
       </Container>

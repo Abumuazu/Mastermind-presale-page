@@ -9,6 +9,7 @@ import ContractInfo from './Components/ContractInfo';
 import CountDown from "./Components/countDown/coundown"
 import Footer from "./Components/footer/footer"
 import { useState } from 'react';
+import Carousels from './Components/Carousel/carousel';
 
 
 function App() {
@@ -54,9 +55,11 @@ function App() {
 }
 
 <Stages showModal={showModal} />
+<Carousels />
 <Footer/>
     </div>
   );
 }
+ 
 
 export default App;
