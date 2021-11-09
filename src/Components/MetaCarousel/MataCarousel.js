@@ -6,6 +6,7 @@ import Image4 from "./MetaImages/step4.png"
 import Image5 from "./MetaImages/step5.png"
 import Image6 from "./MetaImages/step6.png"
 import Image2B from "./MetaImages/step2B.png"
+import styled from "styled-components"
 
 function MetaCarousels() {
  const data = [
@@ -51,7 +52,7 @@ function MetaCarousels() {
   }
   return (
     <div >
-      <div style={{ textAlign: "center"  }}  >
+      <Container  style={{ textAlign: "center"  }}  >
         <h2></h2>
         <p></p>
         <div style={{
@@ -61,7 +62,7 @@ function MetaCarousels() {
             data={data}
             time={6000}
             width="850px"
-            height="500px"
+            height="400px"
             captionStyle={captionStyle}
             radius="10px"
             slideNumber={true}
@@ -84,9 +85,16 @@ function MetaCarousels() {
             }}
           />
         </div>
-      </div>
+      </Container>
     </div>
   );
 }
 
 export default MetaCarousels;
+
+const Container = styled.div   `
+@media screen and (max-width: 700px) {
+    margin: -40% 0 -40% 0;
+}
+
+`
