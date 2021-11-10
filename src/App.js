@@ -64,7 +64,7 @@ function handleTrust() {
   :
   ""
 }
-<CountDown timeTillDate="11 10 2021, 10:00 am" timeFormat="MM DD YYYY, h:mm a" />
+<CountDown timeTillDate="12 1 2021, 10:00 am" timeFormat="MM DD YYYY, h:mm a" />
 <Timer showModal={showContractModal} />
 {
   showContract

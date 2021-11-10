@@ -39,33 +39,33 @@ export default class Countdown extends React.Component {
     
     return (
       <div>
-        <h1 className= "header">Time to Presale</h1>
+        <h1 className= "header">Time To End Presale</h1>
         	<div className='countdown-wrapper'>
 					{days && (
 						<div className='countdown-item'>
-							<SVGCircle r />
-							0
+							<SVGCircle radius={daysRadius} />
+							{days} 
 							<span>days</span>
 						</div>
 					)}
 					{hours && (
 						<div className='countdown-item'>							
-							<SVGCircle  />
-							0 
+							<SVGCircle radius={hoursRadius} />
+							{hours} 
 							<span>hours</span>
 						</div>
 					)}
 					{minutes && (
 						<div className='countdown-item'>
-							<SVGCircle  />
-							0
+							<SVGCircle radius={minutesRadius} />
+							{minutes} 
 							<span>minutes</span>
 						</div>
 					)}
 					{seconds && (
 						<div className='countdown-item'>
-							<SVGCircle  />
-							0
+							<SVGCircle radius={secondsRadius} />
+							{seconds} 
 							<span>seconds</span>
 						</div>
 					)}

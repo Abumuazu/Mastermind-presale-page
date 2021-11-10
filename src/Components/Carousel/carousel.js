@@ -1,7 +1,7 @@
 import { Carousel } from 'react-carousel-minimal';
 import Image1 from "../Carousel/CarouselImages/step1.png"
 import Image2 from "../Carousel/CarouselImages/step2.png"
-import Image11 from "../Carousel/CarouselImages/step11.png"
+import Image3 from "../Carousel/CarouselImages/step3.png"
 import Image4 from "../Carousel/CarouselImages/step4.png"
 import Image5 from "../Carousel/CarouselImages/step5.png"
 import Image6 from "../Carousel/CarouselImages/step6.png"
@@ -25,7 +25,7 @@ function Carousels() {
       caption: "Step2"
     },
     {
-        image:Image11,
+        image:Image3,
         caption: "Step4"
       },
     {
