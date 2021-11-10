@@ -15,7 +15,7 @@ function Header({ showModal }) {
     return (
 <div className= "cont"> 
 
-<Nav><h3 >PRESALE IS HERE!...</h3></Nav>
+<Nav><h3 >PRESALE ONGOING!...</h3></Nav>
 <Wrapper className="header">
 <div className = "header-text">
 <h1>The New DeFi <br />Standard</h1>
