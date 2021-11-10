@@ -116,7 +116,7 @@ function Timer({ showModal }) {
     }, []);
 
     return (
-       <Container className= "Timer">
+       <Container id="buy" className= "Timer">
         <div className="reason"> 
             <h4 className= "header-text">  How To Buy</h4>
 

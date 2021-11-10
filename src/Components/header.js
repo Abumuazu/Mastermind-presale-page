@@ -19,9 +19,9 @@ function Header({ showModal }) {
 <Wrapper className="header">
 <div className = "header-text">
 <h1>The New DeFi <br />Standard</h1>
-<Button onClick={handleClick}>
-<h3>Buy Tokens </h3><img className="arrow" src={Arrow} alt ="arrow" />
-</Button>
+<a href="#buy"><Button >
+<h3>Get Started </h3><img className="arrow" src={Arrow} alt ="arrow" />
+</Button></a>
  </div>
  <div className = "img">
 <img className="Mastermind" src={back} alt= "img" />
