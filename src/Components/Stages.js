@@ -159,7 +159,7 @@ function Timer({ showModal }) {
                     4
                 </div>
                 <h5 className= "list___header"> Connect to the presale smart contract </h5>
-                <h5 className="list__paragraph"> Visit the presale page on your MetaMask wallet DApp browser. Click on the "Buy Tokens" button on the presale page to open buy modal.</h5>
+                <h5 className="list__paragraph"> Visit the presale page on your MetaMask wallet DApp browser. Click on the "Buy Tokens" button below on the presale page to open buy modal.</h5>
                 
                 </List>
                 <Border />
