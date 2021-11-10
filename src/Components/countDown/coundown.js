@@ -39,7 +39,7 @@ export default class Countdown extends React.Component {
     
     return (
       <div>
-        <h1 className= "header">Time To End Presale</h1>
+        <h1 className= "header">Presale Ends In:</h1>
         	<div className='countdown-wrapper'>
 					{days && (
 						<div className='countdown-item'>
