@@ -231,7 +231,7 @@ function Timer({ showModal }) {
         <div className="box">
       
             <BorderBottom>
-                <h3> 1 FTM= 34 MMD</h3>
+                <h3> 1 FTM= 35 MMD</h3>
             </BorderBottom>
             <h3></h3>
             <h3>Total Token available for sale = 4.5 Million </h3>

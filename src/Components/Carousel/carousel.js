@@ -83,7 +83,7 @@ function Carousels() {
             radius="10px"
             slideNumber={true}
             slideNumberStyle={slideNumberStyle}
-            captionPosition="bottom"
+            captionPosition="left"
             automatic={true}
             dots={true}
             pauseIconColor="black"
@@ -93,7 +93,7 @@ function Carousels() {
             thumbnails={true}
             thumbnailWidth="100px"
             style={{
-              textAlign: "center",
+              textAlign: "left",
               maxWidth: "850px",
               maxHeight: "700px",
               margin: "200px auto 50px auto",
